@@ -1,70 +1,139 @@
-# Getting Started with Create React App
+# Clínica Entre Afetos - Site Institucional
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Site multipágina profissional para a Clínica Entre Afetos, especializada em psicologia infanto-juvenil.
 
-## Available Scripts
+## 🚀 Características
 
-In the project directory, you can run:
+- **Design Moderno e Acolhedor**: Paleta de cores suaves e design responsivo
+- **Navegação Intuitiva**: Menu fixo com botão WhatsApp destacado
+- **Hero Section Impactante**: Animações suaves e chamadas para ação
+- **Cards Flip da Equipe**: Efeito hover com informações dos profissionais
+- **Mapa Interativo**: Localização das unidades com marcadores personalizados
+- **Formulário de Contato**: Validação e integração com WhatsApp
+- **Totalmente Responsivo**: Otimizado para desktop, tablet e mobile
+- **Acessibilidade**: Foco em navegação por teclado e leitores de tela
 
-### `npm start`
+## 🛠️ Tecnologias Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React.js** - Framework principal
+- **React Router** - Navegação entre páginas
+- **Framer Motion** - Animações suaves
+- **React Icons** - Ícones modernos
+- **Google Maps** - Mapas interativos
+- **CSS3** - Estilos customizados com variáveis CSS
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📱 Páginas
 
-### `npm test`
+1. **Início** (`/`) - Hero section, destaques e depoimentos
+2. **Sobre** (`/sobre`) - História, valores e equipe com cards flip
+3. **Especialidades** (`/especialidades`) - Serviços oferecidos com ícones
+4. **Contato** (`/contato`) - Formulário e mapa com 3 unidades
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🎨 Paleta de Cores
 
-### `npm run build`
+- **Primária**: #E8B4B8 (Rosa suave)
+- **Secundária**: #F5E6E8 (Rosa muito claro)
+- **Destaque**: #D4A5A9 (Rosa médio)
+- **WhatsApp**: #25D366 (Verde WhatsApp)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Como Executar
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Instalar dependências**:
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Configurar Google Maps API**:
+   - Obtenha uma API Key em: https://console.cloud.google.com/google/maps-apis
+   - Ative as APIs: Maps JavaScript API, Places API, Geocoding API
+   - Crie um arquivo `.env` na raiz do projeto:
+   ```bash
+   REACT_APP_GOOGLE_MAPS_API_KEY=sua_chave_aqui
+   ```
 
-### `npm run eject`
+3. **Executar em desenvolvimento**:
+   ```bash
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. **Build para produção**:
+   ```bash
+   npm run build
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📍 Localizações
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+O site exibe 3 unidades da clínica:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Guarabira Centro** - Manoel Lordão, 219
+2. **Guarabira** - José Bonifácio, 15
+3. **Solânea** - Rua Cirilo da Costa Maranhão, 284
 
-## Learn More
+## 📞 Contato
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Telefone**: (83) 99999-9999
+- **WhatsApp**: Integrado em todo o site
+- **E-mail**: contato@entreafetos.com
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ✨ Funcionalidades Especiais
 
-### Code Splitting
+### Hero Section
+- Animação de entrada com stagger
+- Elementos flutuantes animados
+- Estatísticas da clínica
+- Botões de ação destacados
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Cards Flip da Equipe
+- Efeito hover com rotação 3D
+- Informações profissionais no verso
+- Acessível via teclado e touch
 
-### Analyzing the Bundle Size
+### Mapa Interativo (Google Maps)
+- 3 marcadores personalizados com ícones da clínica
+- InfoWindows com informações completas
+- Lista de unidades abaixo do mapa
+- **Clique nos endereços** para focar no mapa
+- Zoom automático ao selecionar uma unidade
+- Estilo personalizado do mapa
+- Loading state com animação
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Formulário de Contato
+- Validação em tempo real
+- Integração com WhatsApp
+- Feedback visual de envio
 
-### Making a Progressive Web App
+## 🔧 Personalização
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Para personalizar o site:
 
-### Advanced Configuration
+1. **Cores**: Edite as variáveis CSS em `src/styles/variables.css`
+2. **Conteúdo**: Modifique os componentes em `src/pages/`
+3. **Informações de Contato**: Atualize os números e endereços nos componentes
+4. **Logo**: Substitua os placeholders por imagens reais
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📱 Responsividade
 
-### Deployment
+O site é totalmente responsivo com breakpoints:
+- **Desktop**: > 1024px
+- **Tablet**: 768px - 1024px
+- **Mobile**: < 768px
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## ♿ Acessibilidade
 
-### `npm run build` fails to minify
+- Navegação por teclado
+- Contraste adequado
+- Textos alternativos
+- Estados de foco visíveis
+- Suporte a leitores de tela
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🚀 Deploy
+
+Para fazer deploy:
+
+1. Execute `npm run build`
+2. Faça upload da pasta `build` para seu servidor
+3. Configure redirecionamentos para SPA (Single Page Application)
+
+## 📄 Licença
+
+Este projeto foi desenvolvido especificamente para a Clínica Entre Afetos.

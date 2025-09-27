@@ -1,0 +1,390 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaChevronLeft, FaChevronRight, FaTimes, FaExpand } from 'react-icons/fa';
+import '../styles/About.css';
+
+const About = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const clinicImages = [
+    {
+      id: 1,
+      src: '/clinica/clinicasolanea.png',
+      alt: 'Clínica Solânea',
+      title: 'Clínica Solânea'
+    },
+    {
+      id: 2,
+      src: '/clinica/clinicarec.png',
+      alt: 'Sala de Espera',
+      title: 'Sala de Espera'
+    },
+    {
+      id: 3,
+      src: '/clinica/clinicsala.png',
+      alt: 'Sala de Atendimento',
+      title: 'Sala de Atendimento'
+    }
+  ];
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === clinicImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? clinicImages.length - 1 : prevIndex - 1
+    );
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const teamMembers = [
+    {
+      id: 1,
+      name: 'Dra. Ana Maria Silva',
+      specialty: 'Psicóloga Clínica',
+      registration: 'CRP 12/12345',
+      bio: 'Especialista em psicologia infantil com mais de 10 anos de experiência. Formada pela UFPB, com especialização em terapia cognitivo-comportamental.',
+      photo: '/equipe/membro.png'
+    },
+    {
+      id: 2,
+      name: 'Dra. Patrícia Lima',
+      specialty: 'Terapeuta Familiar',
+      registration: 'CRP 12/12346',
+      bio: 'Especialista em terapia familiar sistêmica. Formada pela UFPB com especialização em terapia de casal e família.',
+      photo: '/equipe/membro1.png'
+    },
+    {
+      id: 3,
+      name: 'Dra. Carla Santos',
+      specialty: 'Nutricionista',
+      registration: 'CRN 12/12347',
+      bio: 'Especialista em nutrição infantil e adolescente. Formada pela UFPB com especialização em transtornos alimentares.',
+      photo: '/equipe/membro2.png'
+    }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  return (
+    <div className="about-page">
+      {/* Hero Section */}
+      <section className="about-hero">
+        <div className="container">
+          <motion.div
+            className="about-hero-content"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1>Sobre a Clínica Entre Afetos</h1>
+            <p>
+              Há mais de 15 anos cuidando com carinho e profissionalismo 
+              do desenvolvimento emocional de crianças e adolescentes.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* História e Missão */}
+      <section className="about-story">
+        <div className="container">
+          <motion.div
+            className="story-content"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div className="story-text" variants={itemVariants}>
+              <h2>Nossa História</h2>
+              <p>
+                A Clínica Entre Afetos nasceu do sonho de criar um espaço acolhedor 
+                e especializado no cuidado emocional de crianças e adolescentes. 
+                Fundada em 2008, nossa clínica tem como missão promover o desenvolvimento 
+                saudável e o bem-estar emocional de nossos pacientes.
+              </p>
+              <p>
+                Ao longo dos anos, construímos uma equipe multidisciplinar qualificada 
+                e desenvolvemos metodologias próprias que combinam técnicas científicas 
+                com o cuidado humanizado que marca nossa identidade.
+              </p>
+            </motion.div>
+            <motion.div className="story-image" variants={itemVariants}>
+              <div className="clinic-carousel">
+                <div className="carousel-container">
+                  <div className="carousel-image-container">
+                    <img
+                      src={clinicImages[currentImageIndex].src}
+                      alt={clinicImages[currentImageIndex].alt}
+                      className="carousel-image"
+                    />
+                    <div className="carousel-overlay">
+                      <button 
+                        className="expand-btn"
+                        onClick={openModal}
+                        aria-label="Expandir imagem"
+                      >
+                        <FaExpand />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="carousel-controls">
+                    <button 
+                      className="carousel-btn prev-btn"
+                      onClick={prevImage}
+                      aria-label="Imagem anterior"
+                    >
+                      <FaChevronLeft />
+                    </button>
+                    <button 
+                      className="carousel-btn next-btn"
+                      onClick={nextImage}
+                      aria-label="Próxima imagem"
+                    >
+                      <FaChevronRight />
+                    </button>
+                  </div>
+                  
+                  <div className="carousel-indicators">
+                    {clinicImages.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
+                        onClick={() => setCurrentImageIndex(index)}
+                        aria-label={`Ir para imagem ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                  
+                  <div className="carousel-title">
+                    <h4>{clinicImages[currentImageIndex].title}</h4>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Missão, Visão e Valores */}
+      <section className="about-values">
+        <div className="container">
+          <motion.h2
+            className="section-title"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Nossos Valores
+          </motion.h2>
+          <motion.div
+            className="values-grid"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div className="value-card" variants={itemVariants}>
+              <div className="value-icon">🎯</div>
+              <h3>Missão</h3>
+              <p>
+                Promover o desenvolvimento emocional saudável de crianças e adolescentes, 
+                oferecendo cuidado especializado e acolhedor em um ambiente seguro e confortável.
+              </p>
+            </motion.div>
+            <motion.div className="value-card" variants={itemVariants}>
+              <div className="value-icon">👁️</div>
+              <h3>Visão</h3>
+              <p>
+                Ser referência em psicologia infanto-juvenil na Paraíba, reconhecida 
+                pela excelência no atendimento e pelo impacto positivo na vida das famílias.
+              </p>
+            </motion.div>
+            <motion.div className="value-card" variants={itemVariants}>
+              <div className="value-icon">💎</div>
+              <h3>Valores</h3>
+              <p>
+                Ética, respeito, empatia, profissionalismo e compromisso com o 
+                desenvolvimento integral de cada paciente e sua família.
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Equipe */}
+      <section className="about-team">
+        <div className="container">
+          <motion.h2
+            className="section-title"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Nossa Equipe
+          </motion.h2>
+          <motion.div
+            className="team-grid"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {teamMembers.map((member) => (
+              <motion.div
+                key={member.id}
+                className="team-card"
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="card-inner">
+                  <div className="card-front">
+                    <div className="member-photo">
+                      <img src={member.photo} alt={member.name} className="photo-image" />
+                    </div>
+                    <h3>{member.name}</h3>
+                    <p className="specialty">{member.specialty}</p>
+                    <div className="flip-hint">
+                      <span>Toque para saber mais</span>
+                    </div>
+                  </div>
+                  <div className="card-back">
+                    <h3>{member.name}</h3>
+                    <p className="specialty">{member.specialty}</p>
+                    <p className="registration">{member.registration}</p>
+                    <p className="bio">{member.bio}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Estatísticas */}
+      <section className="about-stats">
+        <div className="container">
+          <motion.div
+            className="stats-grid"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.div className="stat-item" variants={itemVariants}>
+              <div className="stat-number">500+</div>
+              <div className="stat-label">Famílias Atendidas</div>
+            </motion.div>
+            <motion.div className="stat-item" variants={itemVariants}>
+              <div className="stat-number">15+</div>
+              <div className="stat-label">Anos de Experiência</div>
+            </motion.div>
+            <motion.div className="stat-item" variants={itemVariants}>
+              <div className="stat-number">98%</div>
+              <div className="stat-label">Satisfação dos Pacientes</div>
+            </motion.div>
+            <motion.div className="stat-item" variants={itemVariants}>
+              <div className="stat-number">4</div>
+              <div className="stat-label">Profissionais Especializados</div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Modal de Imagem */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <motion.div
+            className="image-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="image-modal"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="modal-close"
+                onClick={closeModal}
+                aria-label="Fechar modal"
+              >
+                <FaTimes />
+              </button>
+              
+              <div className="modal-image-container">
+                <img
+                  src={clinicImages[currentImageIndex].src}
+                  alt={clinicImages[currentImageIndex].alt}
+                  className="modal-image"
+                />
+              </div>
+              
+              <div className="modal-controls">
+                <button 
+                  className="modal-nav-btn prev-btn"
+                  onClick={prevImage}
+                  aria-label="Imagem anterior"
+                >
+                  <FaChevronLeft />
+                </button>
+                <button 
+                  className="modal-nav-btn next-btn"
+                  onClick={nextImage}
+                  aria-label="Próxima imagem"
+                >
+                  <FaChevronRight />
+                </button>
+              </div>
+              
+              <div className="modal-title">
+                <h3>{clinicImages[currentImageIndex].title}</h3>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default About;
+
