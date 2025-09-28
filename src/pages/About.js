@@ -298,14 +298,23 @@ const About = () => {
                 variants={itemVariants}
                 whileHover={isTouchDevice() ? undefined : { scale: 1.05 }}
                 transition={{ duration: 0.3 }}
-                onPointerDown={(e) => {
-                  if (!isTouchDevice()) return;
+                onTouchStart={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleCardClick(member.id);
                 }}
+                onPointerDown={(e) => {
+                  // Evita atraso em browsers que tratam click com delay
+                  if (e.pointerType === 'touch') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleCardClick(member.id);
+                    return;
+                  }
+                  if (!isTouchDevice()) return;
+                }}
                 onClick={(e) => {
-                  // Evita segundo acionamento no mobile (click após pointer)
+                  // Evita segundo acionamento no mobile (click após pointer/touch)
                   if (isTouchDevice()) {
                     e.preventDefault();
                     e.stopPropagation();
