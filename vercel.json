@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/((?!api|_next|_static|favicon.ico|logo|clinica|equipe).*)",
+      "source": "/((?!api|_next|static|favicon.ico).*)",
       "destination": "/index.html"
     }
   ],
