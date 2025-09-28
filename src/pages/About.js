@@ -298,7 +298,20 @@ const About = () => {
                 variants={itemVariants}
                 whileHover={isTouchDevice() ? undefined : { scale: 1.05 }}
                 transition={{ duration: 0.3 }}
-                onClick={() => handleCardClick(member.id)}
+                onPointerDown={(e) => {
+                  if (!isTouchDevice()) return;
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleCardClick(member.id);
+                }}
+                onClick={(e) => {
+                  // Evita segundo acionamento no mobile (click após pointer)
+                  if (isTouchDevice()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                  }
+                }}
               >
                 <div className="card-inner">
                   <div className="card-front">
