@@ -16,7 +16,22 @@ import membro2Img from '../assets/equipe/membro2.png';
 const About = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // Estado para controlar flip por membro (mobile/touch)
+  const [flippedMembers, setFlippedMembers] = useState({});
 
+  const isTouchDevice = () => {
+    return typeof window !== 'undefined' && (window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+  };
+
+  const handleCardClick = (memberId) => {
+    // Em dispositivos touch, alterna o flip a cada clique
+    if (isTouchDevice()) {
+      setFlippedMembers((prev) => ({
+        ...prev,
+        [memberId]: !prev[memberId]
+      }));
+    }
+  };
   const clinicImages = [
     {
       id: 1,
@@ -276,10 +291,11 @@ const About = () => {
             {teamMembers.map((member) => (
               <motion.div
                 key={member.id}
-                className="team-card"
+                className={`team-card ${flippedMembers[member.id] ? 'flipped' : ''}`}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
+                onClick={() => handleCardClick(member.id)}
               >
                 <div className="card-inner">
                   <div className="card-front">

@@ -286,6 +286,10 @@
 .team-card:hover .card-inner {
   transform: rotateY(180deg);
 }
+/* Nova regra: flip via classe para mobile/touch */
+.team-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
 
 .card-front,
 .card-back {
@@ -859,17 +863,9 @@
   .team-card:hover .card-inner {
     transform: none;
   }
-  
+  /* Removemos dependência de :active; o clique alterna a classe .flipped */
   .team-card:active .card-inner {
-    transform: rotateY(180deg);
-  }
-  
-  .value-card:hover {
     transform: none;
-  }
-  
-  .value-card:active {
-    transform: scale(0.98);
   }
 }
 
