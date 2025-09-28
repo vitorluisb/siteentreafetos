@@ -1,0 +1,43 @@
+/* Business Card Page Styles */
+.business-card-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F5E6E8 0%, #E8B4B8 50%, #D4A5A9 100%);
+  position: relative;
+  overflow-x: hidden;
+  font-family: var(--font-primary);
+  padding: 0;
+  margin: 0;
+}
+
+/* Hide navigation and footer for business card page */
+.business-card-page .App {
+  min-height: 100vh;
+}
+
+.business-card-page .App > *:not(.business-card-container) {
+  display: none;
+}
+
+/* Ensure full viewport coverage */
+.business-card-page .business-card-container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Additional responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .business-card-page {
+    padding: 0;
+  }
+  
+  .business-card-page .business-card-container {
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .business-card-page {
+    padding: 0;
+  }
+}
