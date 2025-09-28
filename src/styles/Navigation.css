@@ -117,7 +117,7 @@
 
 /* Botão Menu Mobile */
 .menu-toggle {
-  display: none;
+  display: none; /* oculto por padrão (desktop) */
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   border: none;
   color: var(--white);
@@ -127,7 +127,7 @@
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  display: flex;
+  /* Removido display:flex aqui para manter oculto em telas desktop; será ativado apenas no @media (max-width: 768px) */
   align-items: center;
   justify-content: center;
   transition: all var(--transition-normal);
@@ -241,12 +241,12 @@
   }
   
   .nav-menu {
-    display: none;
+    display: none; /* Oculta menu desktop em telas pequenas */
   }
   
   
   .menu-toggle {
-    display: flex;
+    display: flex; /* Mostra botão hamburguer apenas em mobile */
     order: 3; /* Garante que fica no lado direito */
   }
   
