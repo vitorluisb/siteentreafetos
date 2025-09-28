@@ -1,0 +1,7 @@
+# Netlify redirects for SPA
+/*    /index.html   200
+
+# Static assets
+/logo/*   /logo/:splat   200
+/clinica/*   /clinica/:splat   200
+/equipe/*   /equipe/:splat   200
