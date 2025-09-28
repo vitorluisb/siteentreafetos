@@ -20,7 +20,10 @@ const About = () => {
   const [flippedMembers, setFlippedMembers] = useState({});
 
   const isTouchDevice = () => {
-    return typeof window !== 'undefined' && (window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+    if (typeof window === 'undefined') return false;
+    const mq = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    return mq || hasTouch;
   };
 
   const handleCardClick = (memberId) => {
@@ -293,7 +296,7 @@ const About = () => {
                 key={member.id}
                 className={`team-card ${flippedMembers[member.id] ? 'flipped' : ''}`}
                 variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
+                whileHover={isTouchDevice() ? undefined : { scale: 1.05 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => handleCardClick(member.id)}
               >
