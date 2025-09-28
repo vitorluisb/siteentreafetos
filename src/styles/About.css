@@ -274,6 +274,9 @@
   -webkit-perspective: 1000px;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  /* Melhor acessibilidade e foco */
+  border-radius: var(--border-radius-xl);
+  transition: all var(--transition-normal);
 }
 
 .card-inner {
@@ -281,21 +284,29 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  transition: transform var(--transition-normal);
+  /* Animação mais suave e otimizada */
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
   will-change: transform;
   cursor: pointer;
+  /* Melhor performance em dispositivos móveis */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-.team-card:hover .card-inner {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
-}
-/* Nova regra: flip via classe para mobile/touch */
+/* Regra principal: flip via classe (funciona para hover, click e touch) */
 .team-card.flipped .card-inner {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
+}
+
+/* Hover adicional para desktop - não sobrescreve o flip manual */
+@media (hover: hover) and (pointer: fine) {
+  .team-card:not(.flipped):hover .card-inner {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+  }
 }
 
 .card-front,
@@ -869,13 +880,14 @@
 
 /* Melhorias para dispositivos touch */
 @media (hover: none) and (pointer: coarse) {
-  .team-card:hover .card-inner {
-    transform: none;
+  .team-card {
+    /* Feedback visual ao tocar */
+    -webkit-tap-highlight-color: rgba(var(--primary-color-rgb), 0.1);
   }
-  /* Em touch, iniciar o flip imediatamente ao pressionar */
-  .team-card:active .card-inner {
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
+  
+  /* Feedback visual durante o toque */
+  .team-card:active {
+    transform: scale(0.98);
   }
 }
 
@@ -885,19 +897,32 @@
     transition: none;
   }
   
-  .team-card:hover .card-inner {
+  /* Em modo de movimento reduzido, usar apenas opacity para indicar flip */
+  .team-card.flipped .card-inner {
     transform: none;
+    opacity: 0.8;
   }
   
-  .team-card:focus-within .card-inner {
-    transform: rotateY(180deg);
+  .team-card.flipped .card-front {
+    display: none;
+  }
+  
+  .team-card.flipped .card-back {
+    transform: none;
+    display: flex;
   }
 }
 
 /* Estados de foco para acessibilidade */
-.team-card:focus-within {
-  outline: 2px solid var(--primary-color);
+.team-card:focus {
+  outline: 3px solid var(--primary-color);
   outline-offset: 4px;
   border-radius: var(--border-radius-xl);
+}
+
+.team-card:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0.2);
 }
 

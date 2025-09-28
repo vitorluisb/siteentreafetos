@@ -16,24 +16,50 @@ import membro2Img from '../assets/equipe/membro2.png';
 const About = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Estado para controlar flip por membro (mobile/touch)
+  // Estado para controlar flip por membro (universal para todos dispositivos)
   const [flippedMembers, setFlippedMembers] = useState({});
+  // Estado para detectar se é hover ou click/touch
+  const [hoverStates, setHoverStates] = useState({});
 
-  const isTouchDevice = () => {
-    if (typeof window === 'undefined') return false;
-    const mq = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    const hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-    return mq || hasTouch;
+  /**
+   * Handler universal para alternar o flip do card
+   * Funciona tanto para click/touch quanto para toggle manual
+   */
+  const handleCardToggle = (memberId) => {
+    setFlippedMembers((prev) => ({
+      ...prev,
+      [memberId]: !prev[memberId]
+    }));
   };
 
-  const handleCardClick = (memberId) => {
-    // Em dispositivos touch, alterna o flip a cada clique
-    if (isTouchDevice()) {
-      setFlippedMembers((prev) => ({
+  /**
+   * Handler para mouse enter - apenas para desktop com hover
+   */
+  const handleMouseEnter = (memberId) => {
+    // Só ativa hover se o card não estiver manualmente flipped
+    if (!flippedMembers[memberId]) {
+      setHoverStates((prev) => ({
         ...prev,
-        [memberId]: !prev[memberId]
+        [memberId]: true
       }));
     }
+  };
+
+  /**
+   * Handler para mouse leave - apenas para desktop com hover
+   */
+  const handleMouseLeave = (memberId) => {
+    setHoverStates((prev) => ({
+      ...prev,
+      [memberId]: false
+    }));
+  };
+
+  /**
+   * Determina se o card deve estar flipped baseado no estado manual ou hover
+   */
+  const isCardFlipped = (memberId) => {
+    return flippedMembers[memberId] || hoverStates[memberId];
   };
   const clinicImages = [
     {
@@ -294,33 +320,29 @@ const About = () => {
             {teamMembers.map((member) => (
               <motion.div
                 key={member.id}
-                className={`team-card ${flippedMembers[member.id] ? 'flipped' : ''}`}
+                className={`team-card ${isCardFlipped(member.id) ? 'flipped' : ''}`}
                 variants={itemVariants}
-                whileHover={isTouchDevice() ? undefined : { scale: 1.05 }}
+                whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                onTouchStart={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleCardClick(member.id);
-                }}
-                onPointerDown={(e) => {
-                  // Evita atraso em browsers que tratam click com delay
-                  if (e.pointerType === 'touch') {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleCardClick(member.id);
-                    return;
-                  }
-                  if (!isTouchDevice()) return;
-                }}
+                // Handlers universais para click/touch - funcionam em todos dispositivos
                 onClick={(e) => {
-                  // Evita segundo acionamento no mobile (click após pointer/touch)
-                  if (isTouchDevice()) {
+                  e.preventDefault();
+                  handleCardToggle(member.id);
+                }}
+                // Handlers para hover em desktop - não interferem com touch
+                onMouseEnter={() => handleMouseEnter(member.id)}
+                onMouseLeave={() => handleMouseLeave(member.id)}
+                // Acessibilidade - permite navegação por teclado
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    e.stopPropagation();
-                    return;
+                    handleCardToggle(member.id);
                   }
                 }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Ver mais informações sobre ${member.name}`}
+                aria-pressed={isCardFlipped(member.id)}
               >
                 <div className="card-inner">
                   <div className="card-front">
@@ -330,7 +352,7 @@ const About = () => {
                     <h3>{member.name}</h3>
                     <p className="specialty">{member.specialty}</p>
                     <div className="flip-hint">
-                      <span>Toque para saber mais</span>
+                      <span>Clique ou passe o mouse para saber mais</span>
                     </div>
                   </div>
                   <div className="card-back">
