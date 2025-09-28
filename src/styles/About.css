@@ -870,10 +870,8 @@
   .team-card:hover .card-inner {
     transform: none;
   }
-  /* Removemos dependência de :active; o clique alterna a classe .flipped */
-  .team-card:active .card-inner {
-    transform: none;
-  }
+  /* Removemos regra de :active para não bloquear o flip imediato no toque */
+  /* .team-card:active .card-inner { transform: none; } */
 }
 
 /* Acessibilidade */
