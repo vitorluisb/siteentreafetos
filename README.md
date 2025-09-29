@@ -134,6 +134,10 @@ Para fazer deploy:
 2. Faça upload da pasta `build` para seu servidor
 3. Configure redirecionamentos para SPA (Single Page Application)
 
+## 📄 Documentação do Projeto
+
+- PRP — Plano de Requisitos do Projeto: `src/styles/docs/PRP.md`
+
 ## 📄 Licença
 
 Este projeto foi desenvolvido especificamente para a Clínica Entre Afetos.
