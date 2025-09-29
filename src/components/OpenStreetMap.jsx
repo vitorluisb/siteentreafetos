@@ -6,6 +6,12 @@ import 'leaflet/dist/leaflet.css';
 // Configurar ícones do Leaflet (necessário para React)
 delete L.Icon.Default.prototype._getIconUrl;
 
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+});
+
 // Criar ícone customizado para as clínicas
 const clinicIcon = new L.Icon({
   iconUrl: 'data:image/svg+xml;base64,' + btoa(`
