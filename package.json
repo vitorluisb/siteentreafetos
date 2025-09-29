@@ -9,8 +9,8 @@
     "framer-motion": "^12.23.22",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.544.0",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.9.2"
@@ -26,15 +26,18 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
+    "terser": "^5.31.0",
     "vite": "^5.2.0"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "vercel": "npm run build && vercel --prod",
+    "test-build": "npm run build && npm run preview"
   },
   "engines": {
-    "node": "20.x"
+    "node": ">=18.0.0"
   }
 }
