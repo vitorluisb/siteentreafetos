@@ -11,7 +11,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!_next|static|favicon.ico|logo|clinica|equipe|cartao.html|manifest.json|robots.txt).*)",
+      "source": "/((?!_next|static|favicon.ico|logo|clinica|equipe|bannerhero|logosPlanoDeSaude|publicacoes|cartao.html|manifest.json|robots.txt).*)",
       "destination": "/index.html"
     }
   ],
@@ -53,7 +53,25 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|mp4))",
+      "source": "/bannerhero/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/logosPlanoDeSaude/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/publicacoes/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
