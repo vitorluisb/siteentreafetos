@@ -35,19 +35,18 @@ const HeroSection = () => {
   return (
     <section className="hero-section">
       {/* Container responsivo apenas para mobile */}
-      <div className="hero-mobile-container p-4 sm:p-6 md:p-0">
+      <div className="hero-mobile-container">
         {banners.map((banner, index) => (
           <motion.div
             key={index}
             className={`carousel-slide-mobile ${index === currentBanner ? 'active' : ''}`}
             style={{
-              backgroundImage: `url(${banner})`,
-              '--hero-bg': `url(${banner})`
+              backgroundImage: `url(${banner})`
             }}
             initial={{ opacity: 0 }}
             animate={{ 
               opacity: index === currentBanner ? 1 : 0,
-              scale: index === currentBanner ? 1 : 1.1
+              scale: index === currentBanner ? 1 : 1.05
             }}
             transition={{ 
               duration: 1,

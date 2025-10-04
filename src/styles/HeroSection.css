@@ -1,26 +1,27 @@
 .hero-section {
   position: relative;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
 }
 
 /* Container para mobile - responsivo */
 .hero-mobile-container {
   display: none; /* Oculto por padrão (desktop) */
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -33,37 +34,11 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: none; /* imagem será aplicada via pseudo-elementos */
-  border-radius: 0; /* sem cantos arredondados no mobile */
-  box-shadow: none; /* sem sombra no mobile */
-  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-  overflow: hidden; /* oculta o blur excedente */
-  isolation: isolate; /* cria contexto para z-index do pseudo-elemento */
-}
-
-/* Preenchimento com blur atrás da imagem no mobile (evita faixas superior/inferior) */
-.carousel-slide-mobile::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: var(--hero-bg);
-  background-size: cover; /* cobre a área toda no fundo */
-  background-position: center center;
-  filter: blur(20px) brightness(0.9);
-  transform: scale(1.1);
-}
-
-/* Imagem nítida por cima, sem corte (contain) */
-.carousel-slide-mobile::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background-image: var(--hero-bg);
-  background-size: contain;
+  background-size: 100% 100%; /* Estica a imagem para preencher toda a área sem cortes */
   background-position: center center;
   background-repeat: no-repeat;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  overflow: hidden;
 }
 
 /* Slides para desktop - SEM container, direto na section */
@@ -135,13 +110,29 @@
 @media (max-width: 1024px) {
   .hero-section {
     min-height: 100vh;
+    height: 100vh;
     padding: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100vw;
+    position: relative;
   }
   
   /* Mostrar container mobile */
   .hero-mobile-container {
     display: block;
-    padding: 0; /* sem padding no mobile para ocupar toda a hero */
+    padding: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .carousel-slide-mobile {
+    margin: 0;
+    padding: 0;
   }
   
   /* Ocultar slides desktop */
@@ -166,8 +157,18 @@
 }
 
 @media (max-width: 768px) {
+  .hero-section {
+    height: 55vh;
+    min-height: 55vh;
+  }
+  
   .hero-mobile-container {
     padding: 0;
+    height: 55vh;
+  }
+  
+  .carousel-slide-mobile {
+    height: 55vh;
   }
   
   .hero-overlay {
@@ -185,21 +186,33 @@
 
 @media (max-width: 480px) {
   .hero-section {
-    min-height: 90vh;
+    height: 50vh;
+    min-height: 50vh;
   }
   
   .hero-mobile-container {
     padding: 0;
+    height: 50vh;
+  }
+  
+  .carousel-slide-mobile {
+    height: 50vh;
   }
 }
 
 @media (max-width: 360px) {
   .hero-section {
-    min-height: 85vh;
+    height: 45vh;
+    min-height: 45vh;
   }
   
   .hero-mobile-container {
     padding: 0;
+    height: 45vh;
+  }
+  
+  .carousel-slide-mobile {
+    height: 45vh;
   }
 }
 
@@ -383,13 +396,6 @@
     .carousel-slide-desktop {
       background-size: cover;
     }
-  }
-}
-
-/* Mobile mantém contain para visualização completa */
-@media (max-width: 1024px) {
-  .carousel-slide-mobile {
-    background-size: contain; /* prioriza não cortar a imagem */
   }
 }
 

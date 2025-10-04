@@ -453,3 +453,19 @@ a:focus-visible {
   overflow: hidden;
 }
 
+/* Remove padding/margin do main-content para hero section ocupar toda largura */
+.main-content {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Garante que body e html não tenham scroll horizontal */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
