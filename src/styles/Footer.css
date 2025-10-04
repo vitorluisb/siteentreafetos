@@ -18,8 +18,8 @@
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: var(--spacing-2xl);
+  grid-template-columns: 2fr 1.2fr 1fr 1fr 1.2fr;
+  gap: var(--spacing-xl);
   margin-bottom: var(--spacing-2xl);
 }
 
@@ -124,6 +124,12 @@
 
 .footer-links a:hover {
   color: var(--primary-color);
+}
+
+/* Links compactos para especialidades */
+.footer-links-compact li {
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-sm);
 }
 
 /* Contato */
@@ -251,10 +257,10 @@
 }
 
 /* Responsividade */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .footer-content {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-xl);
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--spacing-lg);
   }
   
   .footer-brand {
@@ -262,6 +268,13 @@
     max-width: 100%;
     text-align: center;
     margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
   }
 }
 

@@ -99,13 +99,39 @@
   }
   
   .buttons-container {
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--spacing-md);
   }
   
-  .buttons-btn-primary,
+  /* Botão WhatsApp: apenas ícone no mobile */
+  .buttons-btn-primary span {
+    display: none;
+  }
+  
+  .buttons-btn-primary {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    max-width: 64px;
+  }
+  
+  .buttons-btn-primary svg {
+    font-size: 32px;
+    margin: 0;
+  }
+  
+  .buttons-btn-primary svg:last-child {
+    display: none;
+  }
+  
+  /* Botão secundário mantém texto */
   .buttons-btn-secondary {
-    width: 100%;
+    width: auto;
     max-width: 280px;
     justify-content: center;
     font-size: 1rem;
@@ -118,7 +144,17 @@
     padding: var(--spacing-sm) 0 var(--spacing-xl) 0;
   }
   
-  .buttons-btn-primary,
+  .buttons-btn-primary {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    max-width: 60px;
+  }
+  
+  .buttons-btn-primary svg {
+    font-size: 28px;
+  }
+  
   .buttons-btn-secondary {
     font-size: 0.95rem;
     padding: var(--spacing-sm) var(--spacing-md);

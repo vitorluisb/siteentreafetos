@@ -63,21 +63,38 @@ const Footer = () => {
             <h3 className="footer-title">Links Rápidos</h3>
             <ul className="footer-links">
               <li><Link to="/">Início</Link></li>
-              <li><Link to="/sobre">Sobre Nós</Link></li>
+              <li><Link to="/sobre/historia">Nossa História</Link></li>
+              <li><Link to="/sobre/equipe">Equipe</Link></li>
               <li><Link to="/servicos">Especialidades</Link></li>
+              <li><Link to="/galeria">Galeria</Link></li>
+              <li><Link to="/publicacoes">Publicações</Link></li>
               <li><Link to="/contato">Contato</Link></li>
+              <li><Link to="/trabalhe-conosco">Trabalhe Conosco</Link></li>
             </ul>
           </div>
 
-          {/* Especialidades */}
+          {/* Especialidades - Coluna 1 */}
           <div className="footer-section">
             <h3 className="footer-title">Especialidades</h3>
-            <ul className="footer-links">
-              <li>Psicologia Infantil</li>
-              <li>Psicologia Adolescente</li>
-              <li>Terapia Familiar</li>
-              <li>Orientacao Vocacional</li>
-              <li>Avaliacao Psicologica</li>
+            <ul className="footer-links footer-links-compact">
+              <li>Fonoaudiologia</li>
+              <li>Terapia Ocupacional</li>
+              <li>Psicologia</li>
+              <li>Psicopedagogia</li>
+              <li>Nutrição</li>
+              <li>Fisioterapia</li>
+            </ul>
+          </div>
+
+          {/* Especialidades - Coluna 2 */}
+          <div className="footer-section">
+            <h3 className="footer-title" style={{ opacity: 0 }}>Especialidades</h3>
+            <ul className="footer-links footer-links-compact">
+              <li>Analista do Comportamento</li>
+              <li>Acompanhante Terapêutico</li>
+              <li>Psicomotricista</li>
+              <li>Hidroterapia</li>
+              <li>Natação</li>
             </ul>
           </div>
 

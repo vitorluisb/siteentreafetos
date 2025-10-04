@@ -522,18 +522,21 @@
   .chatbot-toggle {
     bottom: 20px;
     right: 20px;
-    min-width: 50px;
-    height: 45px;
-    padding: 0 14px;
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    border-radius: 50%;
+    padding: 0;
+  }
+  
+  /* Ocultar texto no mobile - apenas ícone */
+  .whatsapp-text {
+    display: none;
   }
   
   .whatsapp-icon {
-    width: 22px;
-    height: 22px;
-  }
-  
-  .whatsapp-text {
-    font-size: 12px;
+    width: 28px;
+    height: 28px;
   }
   
   .chatbot-messages {
@@ -554,15 +557,27 @@
   }
   
   .chatbot-toggle {
-    width: 55px;
-    height: 55px;
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    border-radius: 50%;
+    padding: 0;
     bottom: 15px;
     right: 15px;
   }
   
+  .whatsapp-text {
+    display: none;
+  }
+  
+  .whatsapp-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
   .chatbot-toggle svg {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
   }
   
   .chatbot-header {
@@ -645,25 +660,27 @@
   }
   
   .chatbot-toggle {
-    min-width: 45px;
-    height: 40px;
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    border-radius: 50%;
+    padding: 0;
     bottom: 12px;
     right: 12px;
-    padding: 0 10px;
-  }
-  
-  .chatbot-toggle svg {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .whatsapp-icon {
-    width: 18px;
-    height: 18px;
   }
   
   .whatsapp-text {
-    font-size: 11px;
+    display: none;
+  }
+  
+  .whatsapp-icon {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .chatbot-toggle svg {
+    width: 20px;
+    height: 20px;
   }
   
   .chatbot-header {
