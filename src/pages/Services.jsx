@@ -1,12 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  FaChild, 
-  FaUserGraduate, 
-  FaUsers, 
-  FaSearch, 
+  FaComments, 
+  FaHandHoldingHeart, 
   FaBrain, 
-  FaHeart,
+  FaBook, 
+  FaAppleAlt, 
+  FaRunning,
+  FaChartLine,
+  FaUserFriends,
+  FaChild,
+  FaSwimmingPool,
+  FaWater,
   FaArrowRight
 } from 'react-icons/fa';
 import '../styles/Services.css';
@@ -15,81 +20,157 @@ const Services = () => {
   const services = [
     {
       id: 1,
-      icon: FaChild,
-      title: 'Psicologia Infantil',
-      description: 'Atendimento especializado para crianças de 0 a 12 anos, utilizando técnicas lúdicas e adaptadas para cada faixa etária.',
+      icon: FaComments,
+      title: 'Fonoaudiologia',
+      description: 'Atendimento especializado para crianças e adolescentes, com intervenções voltadas à comunicação, fala, linguagem e deglutição, utilizando recursos lúdicos e adequados a cada fase do desenvolvimento.',
       features: [
-        'Avaliação do desenvolvimento',
-        'Terapia lúdica',
-        'Intervenção comportamental',
-        'Orientação aos pais'
+        'Avaliação fonoaudiológica',
+        'Estimulação de linguagem oral e escrita',
+        'Terapia de motricidade orofacial',
+        'Intervenção em fala, fluência e voz',
+        'Orientação aos pais e responsáveis'
       ],
       color: '#E8B4B8'
     },
     {
       id: 2,
-      icon: FaUserGraduate,
-      title: 'Psicologia Adolescente',
-      description: 'Acompanhamento especializado para adolescentes, abordando questões específicas desta fase de desenvolvimento.',
+      icon: FaHandHoldingHeart,
+      title: 'Terapia Ocupacional',
+      description: 'Atendimento especializado para crianças e adolescentes, com foco em autonomia nas atividades do dia a dia, integração sensorial e habilidades motoras finas, por meio de atividades lúdicas e funcionais.',
       features: [
-        'Crise de identidade',
-        'Problemas escolares',
-        'Relacionamentos',
-        'Projetos de vida'
+        'Avaliação de desempenho ocupacional',
+        'Integração sensorial',
+        'Treino de AVDs (alimentação, vestir, higiene)',
+        'Estimulação de coordenação motora fina e planejamento motor',
+        'Orientação aos pais e responsáveis'
       ],
       color: '#D4A5A9'
     },
     {
       id: 3,
-      icon: FaUsers,
-      title: 'Terapia Familiar',
-      description: 'Atendimento familiar sistêmico para fortalecer vínculos e melhorar a comunicação entre os membros da família.',
+      icon: FaBrain,
+      title: 'Psicologia',
+      description: 'Atendimento especializado para crianças e adolescentes, com intervenções emocionais e comportamentais, utilizando técnicas lúdicas e abordagens terapêuticas adequadas a cada fase do desenvolvimento.',
       features: [
-        'Dinâmicas familiares',
-        'Comunicação',
-        'Resolução de conflitos',
-        'Fortalecimento de vínculos'
+        'Avaliação psicológica',
+        'Terapia individual (lúdica para crianças)',
+        'Intervenção em habilidades socioemocionais',
+        'Manejo de ansiedade, depressão e desafios comportamentais',
+        'Orientação aos pais e responsáveis'
       ],
       color: '#F5E6E8'
     },
     {
       id: 4,
-      icon: FaSearch,
-      title: 'Orientação Vocacional',
-      description: 'Processo de autoconhecimento e exploração profissional para auxiliar na escolha da carreira.',
+      icon: FaBook,
+      title: 'Psicopedagogia',
+      description: 'Atendimento especializado para crianças e adolescentes, visando prevenir e intervir nas dificuldades de aprendizagem, com estratégias lúdicas e personalizadas para cada perfil.',
       features: [
-        'Autoconhecimento',
-        'Exploração profissional',
-        'Testes vocacionais',
-        'Planejamento de carreira'
+        'Avaliação psicopedagógica',
+        'Intervenção em leitura, escrita e raciocínio lógico',
+        'Desenvolvimento de funções executivas e estratégias de estudo',
+        'Planejamento de rotinas de estudo e organização',
+        'Orientação aos pais, responsáveis e à escola'
       ],
       color: '#E8B4B8'
     },
     {
       id: 5,
-      icon: FaBrain,
-      title: 'Avaliação Psicológica',
-      description: 'Avaliações completas para identificar necessidades específicas e orientar o tratamento adequado.',
+      icon: FaAppleAlt,
+      title: 'Nutrição',
+      description: 'Atendimento especializado para crianças e adolescentes, com planos alimentares individualizados e abordagem educativa, respeitando preferências, fases do desenvolvimento e necessidades específicas.',
       features: [
-        'Avaliação cognitiva',
-        'Avaliação emocional',
-        'Relatórios detalhados',
-        'Orientação terapêutica'
+        'Avaliação nutricional',
+        'Planejamento alimentar e reeducação nutricional',
+        'Intervenção em seletividade alimentar e transtornos alimentares',
+        'Educação nutricional lúdica e consciente',
+        'Orientação aos pais e responsáveis'
       ],
       color: '#D4A5A9'
     },
     {
       id: 6,
-      icon: FaHeart,
-      title: 'Aconselhamento Parental',
-      description: 'Orientação especializada para pais e cuidadores sobre desenvolvimento infantil e estratégias educativas.',
+      icon: FaRunning,
+      title: 'Fisioterapia',
+      description: 'Atendimento especializado para crianças e adolescentes, com foco no desenvolvimento motor, postura, reabilitação e prevenção de lesões, por meio de exercícios e atividades terapêuticas.',
       features: [
-        'Desenvolvimento infantil',
-        'Estratégias educativas',
-        'Gestão comportamental',
-        'Suporte emocional'
+        'Avaliação motora e funcional',
+        'Estimulação motora global e equilíbrio',
+        'Fortalecimento, alongamentos e reabilitação',
+        'Intervenção em alterações posturais e ortopédicas',
+        'Orientação aos pais e responsáveis'
       ],
       color: '#F5E6E8'
+    },
+    {
+      id: 7,
+      icon: FaChartLine,
+      title: 'Analista do Comportamento',
+      description: 'Atendimento especializado para crianças e adolescentes, utilizando princípios da Análise do Comportamento Aplicada (ABA) com metas mensuráveis e atividades lúdicas e funcionais.',
+      features: [
+        'Avaliação funcional do comportamento',
+        'Elaboração de plano ABA individualizado',
+        'Treino de habilidades adaptativas, sociais e de comunicação',
+        'Redução de comportamentos-problema',
+        'Treinamento parental e de cuidadores'
+      ],
+      color: '#E8B4B8'
+    },
+    {
+      id: 8,
+      icon: FaUserFriends,
+      title: 'Acompanhante Terapêutico',
+      description: 'Suporte individualizado a crianças e adolescentes em contextos naturais (escola, casa e comunidade), promovendo generalização de habilidades, autonomia e inclusão social.',
+      features: [
+        'Plano de intervenção em ambiente natural',
+        'Mediação social, acadêmica e comportamental',
+        'Manejo de comportamentos em contexto real',
+        'Treino de rotinas, autonomia e independência',
+        'Orientação aos pais, responsáveis e equipe escolar'
+      ],
+      color: '#D4A5A9'
+    },
+    {
+      id: 9,
+      icon: FaChild,
+      title: 'Psicomotricista',
+      description: 'Atendimento especializado para crianças e adolescentes, integrando corpo e psique para desenvolver coordenação, esquema corporal, lateralidade, organização espaço-temporal e expressão corporal.',
+      features: [
+        'Avaliação psicomotora',
+        'Estimulação de coordenação global e equilíbrio',
+        'Consciência corporal, lateralidade e ritmo',
+        'Organização espaço-temporal e praxias',
+        'Orientação aos pais e responsáveis'
+      ],
+      color: '#F5E6E8'
+    },
+    {
+      id: 10,
+      icon: FaSwimmingPool,
+      title: 'Hidroterapia',
+      description: 'Atendimento especializado para crianças e adolescentes em ambiente aquático, utilizando os benefícios da água para estimular o desenvolvimento motor, sensorial e a reabilitação.',
+      features: [
+        'Avaliação para intervenção aquática',
+        'Estimulação motora e funcional em piscina',
+        'Fortalecimento, mobilidade e equilíbrio na água',
+        'Integração sensorial e relaxamento aquático',
+        'Orientação aos pais e responsáveis'
+      ],
+      color: '#E8B4B8'
+    },
+    {
+      id: 11,
+      icon: FaWater,
+      title: 'Natação',
+      description: 'Aulas para crianças e adolescentes, com foco em adaptação ao meio líquido, segurança aquática, desenvolvimento motor e técnicas de nado, por meio de atividades lúdicas e progressivas.',
+      features: [
+        'Avaliação de nível e adaptação ao meio aquático',
+        'Técnicas de respiração, flutuação e propulsão',
+        'Desenvolvimento de coordenação e estilos de nado',
+        'Segurança e autonomia na água',
+        'Orientação aos pais e responsáveis'
+      ],
+      color: '#D4A5A9'
     }
   ];
 

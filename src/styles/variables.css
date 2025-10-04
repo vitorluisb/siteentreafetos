@@ -17,8 +17,13 @@
   --whatsapp-color: #A8D5BA; /* Verde muito claro e suave */
   
   /* Tipografia */
-  --font-primary: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --font-secondary: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-titles: 'Roboto', 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-text: 'Open Sans', 'Lora', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-buttons: 'Poppins', 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+  /* Fontes legadas (mantidas para compatibilidade) */
+  --font-primary: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-secondary: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   
   /* Tamanhos de fonte */
   --font-size-xs: 0.75rem;

@@ -169,85 +169,16 @@ const About = () => {
         </div>
       </section>
 
-      {/* História e Missão */}
+      {/* Link rápido para a História */}
       <section className="about-story">
         <div className="container">
-          <motion.div
-            className="story-content"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.div className="story-text" variants={itemVariants}>
+          <div className="story-content">
+            <div className="story-text">
               <h2>Nossa História</h2>
-              <p>
-                A Clínica Entre Afetos nasceu do sonho de criar um espaço acolhedor 
-                e especializado no cuidado emocional de crianças e adolescentes. 
-                Fundada em 2008, nossa clínica tem como missão promover o desenvolvimento 
-                saudável e o bem-estar emocional de nossos pacientes.
-              </p>
-              <p>
-                Ao longo dos anos, construímos uma equipe multidisciplinar qualificada 
-                e desenvolvemos metodologias próprias que combinam técnicas científicas 
-                com o cuidado humanizado que marca nossa identidade.
-              </p>
-            </motion.div>
-            <motion.div className="story-image" variants={itemVariants}>
-              <div className="clinic-carousel">
-                <div className="carousel-container">
-                  <div className="carousel-image-container">
-                    <img
-                      src={clinicImages[currentImageIndex].src}
-                      alt={clinicImages[currentImageIndex].alt}
-                      className="carousel-image"
-                    />
-                    <div className="carousel-overlay">
-                      <button 
-                        className="expand-btn"
-                        onClick={openModal}
-                        aria-label="Expandir imagem"
-                      >
-                        <FaExpand />
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className="carousel-controls">
-                    <button 
-                      className="carousel-btn prev-btn"
-                      onClick={prevImage}
-                      aria-label="Imagem anterior"
-                    >
-                      <FaChevronLeft />
-                    </button>
-                    <button 
-                      className="carousel-btn next-btn"
-                      onClick={nextImage}
-                      aria-label="Próxima imagem"
-                    >
-                      <FaChevronRight />
-                    </button>
-                  </div>
-                  
-                  <div className="carousel-indicators">
-                    {clinicImages.map((_, index) => (
-                      <button
-                        key={index}
-                        className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
-                        onClick={() => setCurrentImageIndex(index)}
-                        aria-label={`Ir para imagem ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-                  
-                  <div className="carousel-title">
-                    <h4>{clinicImages[currentImageIndex].title}</h4>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+              <p>Conheça nossa trajetória detalhada, missão, visão e valores.</p>
+              <a href="/sobre/historia" className="btn btn-primary">Ver História completa</a>
+            </div>
+          </div>
         </div>
       </section>
 

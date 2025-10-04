@@ -1,0 +1,88 @@
+.workwithus-page {
+  background: var(--background-light);
+}
+
+.work-hero {
+  padding: var(--spacing-4xl) 0 var(--spacing-2xl) 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.04), rgba(0,0,0,0.02));
+}
+
+.work-hero h1 {
+  font-family: var(--font-titles);
+  font-weight: 900;
+}
+
+.work-form-section {
+  padding: var(--spacing-2xl) 0 var(--spacing-4xl) 0;
+}
+
+.work-form-card {
+  background: #fff;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-2xl);
+}
+
+.work-form-card h2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+}
+
+.work-form .hidden-field {
+  display: none;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: var(--border-radius-lg);
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(232, 180, 184, 0.2);
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+.success-note {
+  margin-top: var(--spacing-lg);
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+

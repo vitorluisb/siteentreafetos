@@ -9,6 +9,8 @@ import entreafetosLogo from '../assets/logo/entreafetoslogo.png';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSobreOpen, setIsSobreOpen] = useState(false); // dropdown desktop
+  const [isSobreMobileOpen, setIsSobreMobileOpen] = useState(false); // submenu mobile
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -31,9 +33,19 @@ const Navigation = () => {
 
   const navItems = [
     { path: '/', label: 'Início' },
-    { path: '/sobre', label: 'Sobre' },
+    {
+      path: '/sobre',
+      label: 'Sobre',
+      children: [
+        { path: '/sobre/historia', label: 'História' },
+        { path: '/sobre/equipe', label: 'Equipe' },
+      ],
+    },
     { path: '/servicos', label: 'Especialidades' },
-    { path: '/contato', label: 'Contato' }
+    { path: '/galeria', label: 'Galeria' },
+    { path: '/publicacoes', label: 'Publicações' },
+    { path: '/contato', label: 'Contato' },
+    { path: '/trabalhe-conosco', label: 'Trabalhe Conosco' }
   ];
 
   return (
@@ -62,16 +74,43 @@ const Navigation = () => {
 
           {/* Menu Desktop */}
           <div className="nav-menu">
-            {navItems.map((item) => (
-              <Link
+            {navItems.filter(item => item.path !== '/trabalhe-conosco').map((item) => (
+              <div
                 key={item.path}
-                to={item.path}
-                className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                className="nav-item-wrapper"
+                onMouseEnter={() => item.children && setIsSobreOpen(true)}
+                onMouseLeave={() => item.children && setIsSobreOpen(false)}
               >
-                {item.label}
-              </Link>
+                {item.children ? (
+                  <span className={`nav-link ${location.pathname.startsWith('/sobre') ? 'active' : ''}`}>{item.label}</span>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={`nav-link ${location.pathname === item.path ? 'active' : ''}`}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+                {item.children && (
+                  <div className={`dropdown ${isSobreOpen ? 'open' : ''}`}>
+                    {item.children.map((sub) => (
+                      <Link key={sub.path} to={sub.path} className="dropdown-link">
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
+
+          {/* Botão CTA Desktop */}
+          <Link
+            to="/trabalhe-conosco"
+            className={`nav-cta ${location.pathname === '/trabalhe-conosco' ? 'active' : ''}`}
+          >
+            Trabalhe Conosco
+          </Link>
 
 
           {/* Botão Menu Mobile */}
@@ -108,13 +147,41 @@ const Navigation = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link
-                      to={item.path}
-                      className={`mobile-nav-link ${location.pathname === item.path ? 'active' : ''}`}
-                      onClick={closeMenu}
-                    >
-                      {item.label}
-                    </Link>
+                    {!item.children ? (
+                      <Link
+                        to={item.path}
+                        className={`${item.path === '/trabalhe-conosco' ? 'mobile-nav-cta' : 'mobile-nav-link'} ${location.pathname === item.path ? 'active' : ''}`}
+                        onClick={closeMenu}
+                      >
+                        {item.label}
+                      </Link>
+                    ) : (
+                      <div className="mobile-submenu">
+                        <button
+                          className="mobile-nav-link submenu-toggle"
+                          onClick={() => setIsSobreMobileOpen(!isSobreMobileOpen)}
+                          aria-expanded={isSobreMobileOpen}
+                        >
+                          {item.label}
+                        </button>
+                        <AnimatePresence>
+                          {isSobreMobileOpen && (
+                            <motion.div
+                              className="mobile-submenu-links"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                            >
+                              {item.children.map((sub) => (
+                                <Link key={sub.path} to={sub.path} className="mobile-submenu-link" onClick={closeMenu}>
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    )}
                   </motion.div>
                 ))}
                 

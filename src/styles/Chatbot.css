@@ -3,30 +3,33 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 65px;
-  height: 65px;
-  background: linear-gradient(135deg, #ff6b6b, #ee5a24, #ff9ff3, #54a0ff);
-  background-size: 300% 300%;
-  border-radius: 50%;
+  width: auto;
+  min-width: 55px;
+  height: 50px;
+  background: #25D366;
+  border-radius: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4), 0 0 20px rgba(255, 107, 107, 0.2);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4), 0 0 20px rgba(37, 211, 102, 0.2);
   transition: all 0.3s ease;
   z-index: 1000;
-  animation: pulse 2s infinite, gradientShift 4s ease infinite;
+  padding: 0 18px;
 }
 
 .chatbot-toggle:hover {
-  transform: scale(1.15);
-  box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6), 0 0 30px rgba(255, 107, 107, 0.3);
-  animation-play-state: paused;
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6), 0 0 30px rgba(37, 211, 102, 0.3);
+  background: #22C55E;
 }
 
 .chatbot-toggle.open {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  animation: none;
+  background: #e74c3c;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 0;
 }
 
 .chatbot-toggle svg {
@@ -34,6 +37,26 @@
   height: 24px;
   color: white;
   transition: all 0.3s ease;
+}
+
+.whatsapp-button-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.whatsapp-icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.whatsapp-text {
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .notification-badge {
@@ -103,7 +126,7 @@
   flex-direction: column;
   z-index: 999;
   animation: slideUp 0.3s ease-out;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @keyframes slideUp {
@@ -125,6 +148,11 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  min-height: 70px;
+  flex-shrink: 0;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+  z-index: 10;
 }
 
 .chatbot-avatar {
@@ -211,6 +239,7 @@
   flex-direction: column;
   gap: var(--spacing-sm);
   background: #f8f9fa;
+  min-height: 0;
 }
 
 .chatbot-messages::-webkit-scrollbar {
@@ -481,89 +510,232 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .chatbot-container {
-    width: calc(100vw - 40px);
-    height: calc(100vh - 140px);
-    bottom: 90px;
-    right: 20px;
-    left: 20px;
-    max-width: 400px;
-    margin: 0 auto;
+    width: calc(100vw - 20px);
+    height: calc(100vh - 100px);
+    bottom: 80px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    border-radius: 15px;
   }
   
   .chatbot-toggle {
     bottom: 20px;
     right: 20px;
+    min-width: 50px;
+    height: 45px;
+    padding: 0 14px;
+  }
+  
+  .whatsapp-icon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .whatsapp-text {
+    font-size: 12px;
+  }
+  
+  .chatbot-messages {
+    padding: var(--spacing-sm);
+    flex: 1;
+    overflow-y: auto;
   }
 }
 
 @media (max-width: 480px) {
   .chatbot-container {
-    width: calc(100vw - 20px);
-    height: calc(100vh - 120px);
-    bottom: 80px;
-    right: 10px;
-    left: 10px;
-    border-radius: 15px;
+    width: calc(100vw - 10px);
+    height: calc(100vh - 80px);
+    bottom: 70px;
+    right: 5px;
+    left: 5px;
+    border-radius: 12px;
   }
   
   .chatbot-toggle {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     bottom: 15px;
     right: 15px;
   }
   
   .chatbot-toggle svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
   }
   
   .chatbot-header {
-    padding: var(--spacing-sm);
+    padding: 12px;
+    min-height: 60px;
+    flex-shrink: 0;
   }
   
   .chatbot-messages {
-    padding: var(--spacing-sm);
+    padding: 10px;
+    flex: 1;
+    overflow-y: auto;
   }
   
   .message-content {
-    max-width: 85%;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-xs);
+    max-width: 90%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.4;
   }
   
   .unit-button {
-    padding: var(--spacing-sm);
+    padding: 12px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  
+  .unit-name {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .unit-address {
+    font-size: 12px;
+    opacity: 0.8;
   }
   
   .chatbot-form {
-    padding: var(--spacing-sm);
+    padding: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .submit-button {
+    padding: 12px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    width: 100%;
+  }
+  
+  .reset-button {
+    padding: 10px 16px;
+    font-size: 14px;
+    width: 100%;
   }
 }
 
 @media (max-width: 360px) {
   .chatbot-container {
-    height: calc(100vh - 100px);
-    bottom: 70px;
+    width: calc(100vw - 8px);
+    height: calc(100vh - 70px);
+    bottom: 60px;
+    right: 4px;
+    left: 4px;
+    border-radius: 10px;
+  }
+  
+  .chatbot-toggle {
+    min-width: 45px;
+    height: 40px;
+    bottom: 12px;
+    right: 12px;
+    padding: 0 10px;
+  }
+  
+  .chatbot-toggle svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .whatsapp-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .whatsapp-text {
+    font-size: 11px;
   }
   
   .chatbot-header {
-    padding: var(--spacing-xs);
+    padding: 10px;
+    min-height: 55px;
+    flex-shrink: 0;
   }
   
   .chatbot-info h3 {
-    font-size: var(--font-size-sm);
+    font-size: 14px;
+  }
+  
+  .status {
+    font-size: 11px;
   }
   
   .chatbot-avatar {
-    width: 35px;
-    height: 35px;
-    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
   }
   
   .avatar-image {
     width: 100%;
     height: 100%;
+  }
+  
+  .chatbot-messages {
+    padding: 8px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .message-content {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  
+  .unit-button {
+    padding: 10px;
+    margin-bottom: 6px;
+  }
+  
+  .unit-name {
+    font-size: 13px;
+  }
+  
+  .unit-address {
+    font-size: 11px;
+  }
+  
+  .chatbot-form {
+    padding: 8px;
+  }
+  
+  .form-group {
+    margin-bottom: 10px;
+  }
+  
+  .form-group label {
+    font-size: 12px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    font-size: 13px;
+    padding: 8px;
+  }
+  
+  .submit-button {
+    padding: 10px 14px;
+    font-size: 13px;
   }
 }
 

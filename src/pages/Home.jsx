@@ -98,6 +98,51 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Seção de Estatísticas */}
+      <section className="statistics-section">
+        <div className="container">
+          <div className="statistics-header">
+            <h2 className="section-title">Prevalência de Transtornos e Dificuldades de Aprendizagem no Brasil</h2>
+            <p className="section-subtitle">
+              Conheça os índices que mostram a importância da intervenção psicopedagógica:
+            </p>
+          </div>
+          <div className="statistics-grid">
+            <div className="statistic-card">
+              <div className="statistic-number">1,2%</div>
+              <div className="statistic-title">Autismo</div>
+              <div className="statistic-description">1 a cada 36 crianças.</div>
+            </div>
+            <div className="statistic-card">
+              <div className="statistic-number">7,6%</div>
+              <div className="statistic-title">TDAH</div>
+              <div className="statistic-description">
+                em crianças e adolescentes com idade entre 6 e 17 anos.
+              </div>
+            </div>
+            <div className="statistic-card">
+              <div className="statistic-number">1,4%</div>
+              <div className="statistic-title">Deficiência Intelectual</div>
+              <div className="statistic-description">2,6 milhões de brasileiros.</div>
+            </div>
+            <div className="statistic-card">
+              <div className="statistic-number">33,8%</div>
+              <div className="statistic-title">Dificuldades</div>
+              <div className="statistic-description">
+                na aprendizagem das crianças e adolescentes.
+              </div>
+            </div>
+            <div className="statistic-card">
+              <div className="statistic-number">10%</div>
+              <div className="statistic-title">Transtornos de aprendizagem</div>
+              <div className="statistic-description">
+                com prejuízos na escrita, leitura e aritmética.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Seção de Depoimentos */}
       <section className="testimonials-section">
         <div className="container">
@@ -144,6 +189,62 @@ const Home = () => {
                   <span>Mãe do Pedro, 15 anos</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Seção de Convênios */}
+      <section className="insurance-section">
+        <div className="container">
+          <div className="insurance-header">
+            <h2 className="section-title">Convênios Aceitos</h2>
+            <p className="section-subtitle">
+              Trabalhamos com os principais planos de saúde para facilitar o seu atendimento
+            </p>
+          </div>
+          <div className="insurance-logos">
+            <div className="insurance-logo-item">
+              <img 
+                src="/logosPlanoDeSaude/unimed.png" 
+                alt="Unimed"
+                loading="lazy"
+              />
+            </div>
+            <div className="insurance-logo-item">
+              <img 
+                src="/logosPlanoDeSaude/Bradesco-Saúde-Logo.png" 
+                alt="Bradesco Saúde"
+                loading="lazy"
+              />
+            </div>
+            <div className="insurance-logo-item">
+              <img 
+                src="/logosPlanoDeSaude/logo_SelectSaude.png" 
+                alt="Select Saúde"
+                loading="lazy"
+              />
+            </div>
+            <div className="insurance-logo-item">
+              <img 
+                src="/logosPlanoDeSaude/abm-saude.jpg" 
+                alt="ABM Saúde"
+                loading="lazy"
+              />
+            </div>
+            <div className="insurance-logo-item">
+              <img 
+                src="/logosPlanoDeSaude/afrafep-saude.png" 
+                alt="Afrafep Saúde"
+                loading="lazy"
+              />
+            </div>
+            <div className="insurance-logo-item">
+              <img 
+                src="/logosPlanoDeSaude/camed.png" 
+                alt="Camed"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
