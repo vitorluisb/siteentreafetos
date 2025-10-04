@@ -1,9 +1,6 @@
 # Dependencies
 node_modules/
 
-# Development
-src/
-
 # Local files
 .env
 .env.local
@@ -21,7 +18,6 @@ yarn-error.log*
 !README.md
 
 # Config files
-vite.config.js
 netlify.toml
 
 # Build outputs
