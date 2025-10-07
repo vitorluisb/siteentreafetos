@@ -197,7 +197,13 @@
 .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-lg); }
 .related-card { background: #fff; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; text-decoration: none; color: var(--text-primary); transition: transform .2s ease, box-shadow .2s ease; }
 .related-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-.related-card img { width: 100%; height: 140px; object-fit: cover; display: block; }
+.related-card img { 
+  width: 100%; 
+  height: 180px; 
+  object-fit: contain; 
+  display: block; 
+  background: #fff; 
+}
 .related-card h4 { padding: var(--spacing-md); }
 
 .empty-state { 

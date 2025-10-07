@@ -26,6 +26,52 @@ const Publications = () => {
       tag: 'Dificuldades de Aprendizagem',
       date: '2025-10-04',
       author: 'Equipe Entre Afetos'
+    },
+    {
+      slug: 'integracao-sensorial-sentidos-organizados',
+      title: 'Integração Sensorial: quando os sentidos se organizam, o mundo faz mais sentido',
+      excerpt: 'Como a integração sensorial apoia atenção, aprendizagem e comportamento em crianças e adolescentes.',
+      cover: '/publicacoes/sensorial.png',
+      tag: 'Saúde Emocional',
+      date: '2025-10-05',
+      author: 'Equipe Entre Afetos'
+    }
+    ,
+    {
+      slug: 'dificuldades-na-escola-ainda-da-tempo-de-superar',
+      title: 'Dificuldades na escola? Ainda dá tempo de superar isso!',
+      excerpt: 'Como identificar os sinais, apoiar em casa e buscar o suporte certo para o aprendizado.',
+      cover: '/publicacoes/dificuldadeescolar.png',
+      tag: 'Dificuldades de Aprendizagem',
+      date: '2025-10-05',
+      author: 'Equipe Entre Afetos'
+    },
+    {
+      slug: 'falar-tarde-nem-sempre-e-so-uma-fase',
+      title: 'Falar tarde nem sempre é só uma fase',
+      excerpt: 'Quando buscar ajuda para o desenvolvimento da fala e da linguagem.',
+      cover: '/publicacoes/fala.png',
+      tag: 'Dicas para Pais',
+      date: '2025-10-07',
+      author: 'Equipe Entre Afetos'
+    },
+    {
+      slug: 'seu-filho-parece-molinho-pode-ser-hipotonia',
+      title: 'Seu filho parece "molinho"? Pode ser hipotonia — e merece atenção',
+      excerpt: 'Como identificar sinais, quando buscar avaliação e o que ajuda no dia a dia.',
+      cover: '/publicacoes/molinho.png',
+      tag: 'Dicas para Pais',
+      date: '2025-10-07',
+      author: 'Equipe Entre Afetos'
+    },
+    {
+      slug: 'dificuldade-na-escrita-pode-ser-tdah',
+      title: 'Dificuldade na escrita pode ser TDAH?',
+      excerpt: 'Nem todo erro na escrita é distração — entenda as causas e como ajudar.',
+      cover: '/publicacoes/escrita.png',
+      tag: 'Dificuldades de Aprendizagem',
+      date: '2025-10-07',
+      author: 'Equipe Entre Afetos'
     }
   ]), []);
 
