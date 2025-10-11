@@ -34,3 +34,44 @@ Thumbs.db
 
 # Testing
 coverage/
+
+# Heavy media files (use CDN instead)
+public/videocompr.mp4
+public/cliniarco/
+public/cliniaquarela/
+public/atendimento/
+
+# Keep only essential images
+!public/logo/
+!public/equipe/
+!public/publicacoes/
+!public/bannerhero/
+
+# SQL files and scripts (not needed in production)
+*.sql
+scripts/
+supabase/
+optimize-images.cjs
+
+# Development files
+.git/
+.gitignore
+deploy.bat
+*.sh
+*.md
+!README.md
+
+# Large dependencies (will be rebuilt)
+node_modules/
+package-lock.json
+
+# Build cache
+.vite/
+dist/
+
+# Additional optimization files
+PERFORMANCE_REPORT.md
+DEPLOY_GUIDE.md
+SETUP_GUIDE.md
+SOLUTION_SUMMARY.md
+VERCEL_ENV_SETUP.md
