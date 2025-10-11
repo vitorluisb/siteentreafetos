@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import HeroSection from '../components/HeroSection';
+import { CDNVideo } from '../components/CDNMedia';
 import '../styles/Home.css';
 
-// Import do vídeo
-import videoClinica from '/videocompr.mp4';
 import entreafetosLogo from '../assets/logo/entreafetoslogo.png';
 
 const Home = () => {
@@ -66,7 +65,8 @@ const Home = () => {
             </div>
             <div className="highlight-video">
               <div className="video-container-small">
-                <video 
+                <CDNVideo 
+                  src="videocompr.mp4"
                   className="auto-play-video"
                   autoPlay
                   muted={videoMuted}
@@ -75,10 +75,7 @@ const Home = () => {
                   controls
                   onClick={handleVideoClick}
                   onError={handleVideoError}
-                >
-                  <source src={videoClinica} type="video/mp4" />
-                  <p>Seu navegador não suporta o elemento de vídeo.</p>
-                </video>
+                />
                 <div className="video-info">
                   <h4>Conheça Nossa Clínica</h4>
                   <p>Clique no vídeo para ampliar com áudio</p>
@@ -278,17 +275,15 @@ const Home = () => {
             <button className="video-modal-close" onClick={closeVideoModal}>
               ×
             </button>
-            <video 
+            <CDNVideo 
+              src="videocompr.mp4"
               className="video-modal-player"
               autoPlay
               muted={false}
               loop
               controls
               onError={handleVideoError}
-            >
-              <source src={videoClinica} type="video/mp4" />
-              <p>Seu navegador não suporta o elemento de vídeo.</p>
-            </video>
+            />
             <div className="video-modal-info">
               <h3>Conheça Nossa Clínica</h3>
               <p>Nossa clínica é especializada no cuidado emocional de crianças e adolescentes, oferecendo um ambiente acolhedor e profissionais qualificados para acompanhar cada etapa do desenvolvimento.</p>
