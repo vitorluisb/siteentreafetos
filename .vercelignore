@@ -63,7 +63,6 @@ deploy.bat
 
 # Large dependencies (will be rebuilt)
 node_modules/
-package-lock.json
 
 # Build cache
 .vite/
