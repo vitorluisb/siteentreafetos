@@ -3,7 +3,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "installCommand": "npm ci",
+  "installCommand": "npm ci --include=dev",
   "rewrites": [
     {
       "source": "/((?!_next|static|favicon.ico|logo|clinica|equipe|bannerhero|logosPlanoDeSaude|publicacoes|cartao.html|manifest.json|robots.txt|videocompr.mp4|atendimento|cliniaquarela|cliniarco|clinicajardim).*)",
