@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AdvancedOptimizedImage, useImagePreload } from '../utils/imageOptimization.jsx';
 import '../styles/Gallery.css';
 
 // URLs das imagens da Unidade Aquarela (pasta public)
@@ -62,6 +63,9 @@ const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Hook para preload de imagens
+  const { preloadImage } = useImagePreload();
 
   const images = useMemo(() => ([
     // Unidade Aquarela
@@ -127,19 +131,42 @@ const Gallery = () => {
   const openLightbox = useCallback((index) => {
     setLightboxIndex(index);
     setIsOpen(true);
-  }, []);
+    
+    // Preload das imagens adjacentes quando abrir o lightbox
+    const nextIndex = (index + 1) % filtered.length;
+    const prevIndex = (index - 1 + filtered.length) % filtered.length;
+    
+    if (filtered[nextIndex]) preloadImage(filtered[nextIndex].src);
+    if (filtered[prevIndex]) preloadImage(filtered[prevIndex].src);
+  }, [filtered, preloadImage]);
 
   const closeLightbox = useCallback(() => {
     setIsOpen(false);
   }, []);
 
   const showPrev = useCallback(() => {
-    setLightboxIndex((prev) => (prev - 1 + filtered.length) % filtered.length);
-  }, [filtered.length]);
+    setLightboxIndex((prev) => {
+      const newIndex = (prev - 1 + filtered.length) % filtered.length;
+      
+      // Preload da imagem anterior à nova posição
+      const prevIndex = (newIndex - 1 + filtered.length) % filtered.length;
+      if (filtered[prevIndex]) preloadImage(filtered[prevIndex].src);
+      
+      return newIndex;
+    });
+  }, [filtered.length, filtered, preloadImage]);
 
   const showNext = useCallback(() => {
-    setLightboxIndex((prev) => (prev + 1) % filtered.length);
-  }, [filtered.length]);
+    setLightboxIndex((prev) => {
+      const newIndex = (prev + 1) % filtered.length;
+      
+      // Preload da próxima imagem após a nova posição
+      const nextIndex = (newIndex + 1) % filtered.length;
+      if (filtered[nextIndex]) preloadImage(filtered[nextIndex].src);
+      
+      return newIndex;
+    });
+  }, [filtered.length, filtered, preloadImage]);
 
   // Fecha com ESC
   useEffect(() => {
@@ -188,7 +215,15 @@ const Gallery = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <img src={img.src} alt={img.alt} loading="lazy" />
+                <AdvancedOptimizedImage
+                  src={img.src}
+                  alt={img.alt}
+                  priority={index < 6}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={85}
+                  placeholder="shimmer"
+                  className={index < 6 ? "priority-image" : "lazy-image"}
+                />
                 <div className="badge-row">
                   {img.tags.map((t) => (
                     <span className="badge" key={t}>{t}</span>
@@ -229,7 +264,19 @@ const Gallery = () => {
             >
               <button className="lightbox-close" onClick={closeLightbox} aria-label="Fechar">×</button>
               <button className="lightbox-prev" onClick={showPrev} aria-label="Anterior">‹</button>
-              <img src={filtered[lightboxIndex]?.src} alt={filtered[lightboxIndex]?.alt} />
+              <AdvancedOptimizedImage
+                src={filtered[lightboxIndex]?.src}
+                alt={filtered[lightboxIndex]?.alt}
+                priority={true}
+                quality={95}
+                sizes="90vw"
+                placeholder="blur"
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '75vh',
+                  objectFit: 'contain'
+                }}
+              />
               <button className="lightbox-next" onClick={showNext} aria-label="Próximo">›</button>
               <p className="lightbox-caption">{filtered[lightboxIndex]?.alt}</p>
             </motion.div>
