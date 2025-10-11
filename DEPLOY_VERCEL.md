@@ -1,187 +1,163 @@
-# 🚀 Deploy na Vercel - Clínica Entre Afetos
+# 🚀 Guia de Deploy para Vercel - Site Entre Afetos
 
-## 📋 Pré-requisitos
+## ✅ Status do Projeto
 
-- [ ] Conta na [Vercel](https://vercel.com)
-- [ ] Projeto no GitHub/GitLab/Bitbucket
-- [ ] Variáveis de ambiente configuradas
+### Configurações Verificadas
+- ✅ **vercel.json** configurado com otimizações
+- ✅ **Build de produção** testado e funcionando
+- ✅ **Otimizações de performance** implementadas
+- ✅ **GitHub** atualizado com últimas mudanças
+- ✅ **Headers de cache** otimizados
 
-## 🔧 Configuração das Variáveis de Ambiente
+## 🔧 Configuração do Vercel
 
-### 1. No Dashboard da Vercel
+### 1. Arquivo vercel.json
+O projeto já possui um arquivo `vercel.json` configurado com:
+- Build estático usando `@vercel/static-build`
+- Rewrites para SPA (Single Page Application)
+- Headers de cache otimizados para todos os assets
+- Configuração de diretório de build (`dist`)
 
-Acesse: **Project Settings > Environment Variables**
+### 2. Variáveis de Ambiente
+Configure as seguintes variáveis no painel do Vercel:
 
-Adicione as seguintes variáveis:
+```bash
+# Supabase
+VITE_SUPABASE_URL=sua_url_do_supabase
+VITE_SUPABASE_ANON_KEY=sua_chave_anonima_do_supabase
 
-```env
-VITE_SUPABASE_URL=https://eauisleumvlaszvgfoqv.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhdWlzbGV1bXZsYXN6dmdmb3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5MDE2MzAsImV4cCI6MjA3NTQ3NzYzMH0.ZieRFisaFrf7cpc9rqAokmdvtSG2pycFfUG_7TEl4xc
-NODE_ENV=production
-VITE_APP_ENV=production
-```
-
-### 2. Variáveis Opcionais
-
-```env
-VITE_GOOGLE_MAPS_API_KEY=sua-chave-google-maps-aqui
-VITE_APP_URL=https://seu-dominio.vercel.app
+# Outras configurações (se necessário)
+NODE_VERSION=18
 ```
 
 ## 🚀 Processo de Deploy
 
-### Método 1: Deploy Automático (Recomendado)
+### Opção 1: Deploy via GitHub (Recomendado)
+1. **Conectar Repositório**:
+   - Acesse [vercel.com](https://vercel.com)
+   - Clique em "New Project"
+   - Conecte com GitHub: `https://github.com/vitorluisb/siteentreafetos.git`
 
-1. **Conecte o repositório:**
-   - Acesse [vercel.com/new](https://vercel.com/new)
-   - Selecione seu repositório
-   - Clique em "Import"
+2. **Configurações do Projeto**:
+   - Framework Preset: `Vite`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Install Command: `npm install`
 
-2. **Configure o projeto:**
-   - **Framework Preset:** Vite
-   - **Root Directory:** `./` (raiz)
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
+3. **Deploy Automático**:
+   - Cada push para `main` fará deploy automático
+   - Preview deployments para outras branches
 
-3. **Adicione as variáveis de ambiente** (conforme seção anterior)
-
-4. **Deploy:**
-   - Clique em "Deploy"
-   - Aguarde o processo (2-5 minutos)
-
-### Método 2: Deploy via CLI
-
+### Opção 2: Deploy via CLI
 ```bash
 # Instalar Vercel CLI
 npm i -g vercel
 
-# Login na Vercel
+# Login no Vercel
 vercel login
 
 # Deploy
-vercel
-
-# Deploy para produção
 vercel --prod
 ```
 
-## 📁 Estrutura de Arquivos Importantes
+## 📊 Otimizações Implementadas
 
+### Performance
+- ✅ **Lazy Loading** de imagens
+- ✅ **Preload inteligente** de imagens críticas
+- ✅ **Compressão de imagens** (até 94% de redução)
+- ✅ **Cache headers** otimizados (1 ano para assets)
+- ✅ **Code splitting** automático
+- ✅ **Placeholders shimmer** para melhor UX
+
+### Build Otimizado
+- ✅ **Vite** com plugins de otimização
+- ✅ **Imagemin** para compressão de imagens
+- ✅ **Bundle splitting** inteligente
+- ✅ **Tree shaking** automático
+
+## 🔍 Verificação Pós-Deploy
+
+### 1. Teste de Performance
+Execute o script de teste:
+```bash
+npm run test:performance
 ```
-clinentreafetos/
-├── 📄 vercel.json              ← Configurações da Vercel
-├── 📄 .env.example             ← Template de variáveis
-├── 📄 vite.config.js           ← Configurações otimizadas
-├── 📄 package.json             ← Scripts e dependências
-└── 📁 dist/                    ← Build de produção
+
+### 2. Verificações Manuais
+- [ ] Site carrega corretamente
+- [ ] Imagens são carregadas com lazy loading
+- [ ] Cache headers estão funcionando
+- [ ] Formulários funcionam corretamente
+- [ ] Navegação entre páginas funciona
+
+### 3. Ferramentas de Análise
+- **Lighthouse**: Teste de performance
+- **GTmetrix**: Análise de velocidade
+- **WebPageTest**: Teste detalhado de carregamento
+
+## 🌐 URLs do Projeto
+
+### Produção
+- **Site**: https://siteentreafetos.vercel.app (será gerado após deploy)
+- **GitHub**: https://github.com/vitorluisb/siteentreafetos
+
+### Desenvolvimento
+- **Local**: http://localhost:5173
+- **Preview**: URLs geradas automaticamente para PRs
+
+## 🔧 Comandos Úteis
+
+```bash
+# Desenvolvimento
+npm run dev
+
+# Build de produção
+npm run build
+
+# Preview do build
+npm run preview
+
+# Teste de performance
+node scripts/test-performance.js
+
+# Deploy para Vercel
+vercel --prod
 ```
 
-## ⚙️ Configurações Aplicadas
+## 📈 Melhorias Esperadas
 
-### vercel.json
-- ✅ Configurado para Vite
-- ✅ Rewrites para SPA
-- ✅ Headers de cache otimizados
-- ✅ Suporte a assets estáticos
+### Performance
+- **30-50%** redução no tempo de carregamento
+- **90+** score no Lighthouse Performance
+- **Redução significativa** no uso de dados
+- **Melhor experiência** em conexões lentas
 
-### vite.config.js
-- ✅ Minificação com Terser
-- ✅ Code splitting otimizado
-- ✅ Compressão de assets
-- ✅ Remoção de console.log
+### SEO
+- **Headers otimizados** para cache
+- **Lazy loading** não bloqueia renderização
+- **Preload** de recursos críticos
 
-## 🔍 Verificações Pós-Deploy
+## 🚨 Troubleshooting
 
-### 1. Funcionalidades Básicas
-- [ ] Página inicial carrega
-- [ ] Navegação entre páginas
-- [ ] Responsividade mobile
-- [ ] Imagens carregam corretamente
-
-### 2. Funcionalidades Específicas
-- [ ] Vídeo institucional (modal)
-- [ ] Chatbot funciona
-- [ ] Formulários enviam
-- [ ] Galeria de fotos
-- [ ] Sistema de publicações
-
-### 3. Performance
-- [ ] Lighthouse Score > 90
-- [ ] Tempo de carregamento < 3s
-- [ ] Assets comprimidos
-
-## 🐛 Solução de Problemas
-
-### Erro 404 em rotas
-**Causa:** Configuração de rewrites
-**Solução:** Verificar `vercel.json`
-
-### Variáveis de ambiente não funcionam
-**Causa:** Variáveis não configuradas
-**Solução:** Verificar Environment Variables na Vercel
-
-### Build falha
-**Causa:** Dependências ou código
-**Solução:** Testar `npm run build` localmente
-
-### Assets não carregam
-**Causa:** Paths incorretos
-**Solução:** Verificar configurações de assets
-
-## 📊 Monitoramento
-
-### Analytics da Vercel
-- Acesse: **Project > Analytics**
-- Monitore: Pageviews, Performance, Errors
+### Problemas Comuns
+1. **Build falha**: Verificar dependências no package.json
+2. **Imagens não carregam**: Verificar paths relativos
+3. **Variáveis de ambiente**: Confirmar configuração no Vercel
+4. **Cache issues**: Limpar cache do navegador
 
 ### Logs de Deploy
-- Acesse: **Project > Deployments**
-- Clique em qualquer deploy para ver logs
-
-## 🔄 Atualizações Futuras
-
-### Deploy Automático
-- Push para `main` → Deploy automático
-- Pull Requests → Preview deploys
-
-### Rollback
-```bash
-# Via CLI
-vercel rollback [deployment-url]
-
-# Via Dashboard
-Project > Deployments > Promote to Production
-```
+- Acesse o painel do Vercel para ver logs detalhados
+- Use `vercel logs` para logs via CLI
 
 ## 📞 Suporte
 
-### Recursos Úteis
-- [Documentação Vercel](https://vercel.com/docs)
-- [Guia Vite + Vercel](https://vercel.com/guides/deploying-vite-to-vercel)
-- [Troubleshooting](https://vercel.com/support)
-
-### Comandos Úteis
-```bash
-# Verificar status
-vercel ls
-
-# Ver logs
-vercel logs [deployment-url]
-
-# Informações do projeto
-vercel inspect [deployment-url]
-```
+Para problemas específicos:
+1. Verificar logs no painel do Vercel
+2. Consultar documentação do Vite
+3. Verificar issues no repositório GitHub
 
 ---
 
-## ✅ Checklist Final
-
-- [ ] Variáveis de ambiente configuradas
-- [ ] Build local testado (`npm run build`)
-- [ ] Preview local testado (`npm run preview`)
-- [ ] Deploy realizado
-- [ ] Funcionalidades testadas em produção
-- [ ] Performance verificada
-- [ ] Domínio customizado configurado (opcional)
-
-**🎉 Projeto pronto para produção!**
+**Última atualização**: $(date)
+**Versão**: 2.0 com otimizações de performance

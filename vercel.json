@@ -1,14 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
   "rewrites": [
     {
       "source": "/((?!_next|static|favicon.ico|logo|clinica|equipe|bannerhero|logosPlanoDeSaude|publicacoes|cartao.html|manifest.json|robots.txt|videocompr.mp4|atendimento|cliniaquarela|cliniarco|clinicajardim).*)",

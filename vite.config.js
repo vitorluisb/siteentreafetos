@@ -54,14 +54,53 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          motion: ['framer-motion'],
-          icons: ['react-icons', 'lucide-react'],
-          maps: ['leaflet', 'react-leaflet', '@googlemaps/js-api-loader', '@googlemaps/react-wrapper'],
-          ui: ['@chakra-ui/react', '@emotion/react', '@emotion/styled'],
-          supabase: ['@supabase/supabase-js'],
+        manualChunks: (id) => {
+          // React core
+          if (id.includes('react') && !id.includes('react-router') && !id.includes('react-icons') && !id.includes('react-leaflet') && !id.includes('react-dropzone') && !id.includes('react-hook-form')) {
+            return 'react-core';
+          }
+          // Router
+          if (id.includes('react-router')) {
+            return 'router';
+          }
+          // UI Libraries
+          if (id.includes('@chakra-ui') || id.includes('@emotion')) {
+            return 'ui-chakra';
+          }
+          // Animation
+          if (id.includes('framer-motion')) {
+            return 'motion';
+          }
+          // Icons (split into smaller chunks)
+          if (id.includes('react-icons')) {
+            return 'icons-react';
+          }
+          if (id.includes('lucide-react')) {
+            return 'icons-lucide';
+          }
+          // Maps (split into smaller chunks)
+          if (id.includes('leaflet') || id.includes('react-leaflet')) {
+            return 'maps-leaflet';
+          }
+          if (id.includes('@googlemaps')) {
+            return 'maps-google';
+          }
+          // Supabase
+          if (id.includes('@supabase')) {
+            return 'supabase';
+          }
+          // Forms
+          if (id.includes('react-hook-form') || id.includes('react-dropzone')) {
+            return 'forms';
+          }
+          // Date utilities
+          if (id.includes('date-fns')) {
+            return 'date-utils';
+          }
+          // Other vendor libraries
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         },
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
