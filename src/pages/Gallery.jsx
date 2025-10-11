@@ -3,37 +3,35 @@ import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/Gallery.css';
 
 // URLs das imagens da Unidade Aquarela (pasta public)
-const aparelhos = '/cliniaquarela/aparelhos.jpg';
-const balanco = '/cliniaquarela/balanco.jpg';
-const corredor = '/cliniaquarela/corredor.jpg';
-const escalada = '/cliniaquarela/escalada.jpg';
+const aparelhos = '/cliniaquarela/aparelhos.png';
+const balanco = '/cliniaquarela/balanco.png';
+const corredor = '/cliniaquarela/corredor.png';
+const escalada = '/cliniaquarela/escalada.png';
 const frenteaquarela = '/cliniaquarela/frenteaquqrela.JPG';
-const salaatividades = '/cliniaquarela/salaatividades.jpg';
-const salaatividades2 = '/cliniaquarela/salaatividades2.jpg';
-const salaatividades4 = '/cliniaquarela/salaatividades4.jpg';
+const salaatividades = '/cliniaquarela/salaatividades.png';
+const salaatividades2 = '/cliniaquarela/salaatividades2.png';
+const salaatividades4 = '/cliniaquarela/salaatividades4.png';
 
 // URLs das imagens da Unidade Arco-íris (pasta public)
-const arcoAparelhos = '/cliniarco/aparelhos.jpg';
-const arcoAparelhos2 = '/cliniarco/aparelhos2.jpg';
-const arcoAparelhos4 = '/cliniarco/aparelhos4.jpg';
-const arcoAparelhos3 = '/cliniarco/aparelhso3.jpg';
-const arcond = '/cliniarco/arcond.jpg';
-const arcoAtendimento3 = '/cliniarco/atendimento3.jpg';
-const arcoBrinquedos = '/cliniarco/brinquedos.jpg';
-const arcoEquipamentos = '/cliniarco/equipamentos.jpg';
-const arcoFachadaEspecialidades = '/cliniarco/fachadaespecialidades.jpg';
-const arcoFachada = '/cliniarco/fachadalogo.jpg';
-const arcoRall = '/cliniarco/rall.jpg';
-const arcoSala3 = '/cliniarco/sala3.jpg';
-const arcoSalaAted = '/cliniarco/salaated.jpg';
-const arcoSalaAtividades = '/cliniarco/saladeatividades.jpg';
+const arcoAparelhos = '/cliniarco/aparelhos.png';
+const arcoAparelhos2 = '/cliniarco/aparelhos2.png';
+const arcoAparelhos4 = '/cliniarco/aparelhos4.png';
+const arcoAparelhos3 = '/cliniarco/aparelhso3.png';
+const arcond = '/cliniarco/arcond.png';
+const arcoAtendimento3 = '/cliniarco/atendimento3.png';
+const arcoBrinquedos = '/cliniarco/brinquedos.png';
+const arcoEquipamentos = '/cliniarco/equipamentos.png';
+const arcoFachadaEspecialidades = '/cliniarco/fachadaespecialidades.png';
+const arcoFachada = '/cliniarco/fachadalogo.png';
+const arcoRall = '/cliniarco/rall.png';
+const arcoSala3 = '/cliniarco/sala3.png';
+const arcoSalaAted = '/cliniarco/salaated.png';
+const arcoSalaAtividades = '/cliniarco/saladeatividades.png';
 const arcoImagem = '/cliniarco/484e4a0a-953f-4527-80cb-b1b3f63800cf.JPG';
 
 // URLs das imagens da Unidade Jardim (pasta public)
-const jardimAtendimento = '/clinicajardim/atedinmento.jpg';
-const jardimAtendimentoSola = '/clinicajardim/atendimentosola.JPG';
-const jardimBrinquedos = '/clinicajardim/brinquedos.jpg';
-const jardimFrente = '/clinicajardim/frentesolanea.JPG';
+const jardimAtendimento = '/clinicajardim/atedinmento.png';
+const jardimBrinquedos = '/clinicajardim/brinquedos.png';
 const jardimJardim = '/clinicajardim/jardim.JPG';
 const jardimMesinha = '/clinicajardim/mesinha.JPG';
 const jardimParede = '/clinicajardim/parede.JPG';
@@ -41,6 +39,8 @@ const jardimParede2 = '/clinicajardim/parede2.JPG';
 const jardimParedeLogo = '/clinicajardim/paredelogo.JPG';
 const jardimRall = '/clinicajardim/rallentrad.JPG';
 const jardimSalaAtend = '/clinicajardim/saladeatend.JPG';
+const jardimImagem1 = '/clinicajardim/19d0de27-2d1c-4bb2-833d-3a9f2f3617fd.JPG';
+const jardimImagem2 = '/clinicajardim/5dd01bc1-187e-4414-b533-53688bff612b.JPG';
 
 // URLs das imagens de Atendimentos (pasta public)
 const atendimento1 = '/atendimento/IMG_0365.jpg';
@@ -53,6 +53,8 @@ const atendimento7 = '/atendimento/IMG_1677.jpg';
 const atendimento8 = '/atendimento/IMG_2261.jpg';
 const atendimento9 = '/atendimento/IMG_4633.jpg';
 const atendimento10 = '/atendimento/IMG_4636.jpg';
+const atendimento11 = '/atendimento/IMG_4778.jpg';
+const atendimento12 = '/atendimento/IMG_9322.jpg';
 
 const CATEGORIES = ['Todos', 'Unidade Aquarela', 'Unidade Arco-íris', 'Unidade Jardim', 'Atendimentos'];
 
@@ -90,10 +92,8 @@ const Gallery = () => {
     { src: arcoRall, alt: 'Hall - Unidade Arco-íris', tags: ['Unidade Arco-íris'] },
     
     // Unidade Jardim
-    { src: jardimFrente, alt: 'Frente - Unidade Jardim', tags: ['Unidade Jardim'] },
     { src: jardimJardim, alt: 'Jardim - Unidade Jardim', tags: ['Unidade Jardim'] },
     { src: jardimAtendimento, alt: 'Atendimento - Unidade Jardim', tags: ['Unidade Jardim'] },
-    { src: jardimAtendimentoSola, alt: 'Atendimento Sola - Unidade Jardim', tags: ['Unidade Jardim'] },
     { src: jardimSalaAtend, alt: 'Sala de Atendimento - Unidade Jardim', tags: ['Unidade Jardim'] },
     { src: jardimBrinquedos, alt: 'Brinquedos - Unidade Jardim', tags: ['Unidade Jardim'] },
     { src: jardimMesinha, alt: 'Mesinha - Unidade Jardim', tags: ['Unidade Jardim'] },
@@ -101,6 +101,8 @@ const Gallery = () => {
     { src: jardimParede, alt: 'Parede - Unidade Jardim', tags: ['Unidade Jardim'] },
     { src: jardimParede2, alt: 'Parede 2 - Unidade Jardim', tags: ['Unidade Jardim'] },
     { src: jardimRall, alt: 'Hall de Entrada - Unidade Jardim', tags: ['Unidade Jardim'] },
+    { src: jardimImagem1, alt: 'Ambiente - Unidade Jardim', tags: ['Unidade Jardim'] },
+    { src: jardimImagem2, alt: 'Espaço Terapêutico - Unidade Jardim', tags: ['Unidade Jardim'] },
     
     // Atendimentos
     { src: atendimento1, alt: 'Atendimento - Sala de Terapia', tags: ['Atendimentos'] },
@@ -112,7 +114,9 @@ const Gallery = () => {
     { src: atendimento7, alt: 'Atendimento - Sala de Integração', tags: ['Atendimentos'] },
     { src: atendimento8, alt: 'Atendimento - Ambiente de Apoio', tags: ['Atendimentos'] },
     { src: atendimento9, alt: 'Atendimento - Espaço Multifuncional', tags: ['Atendimentos'] },
-    { src: atendimento10, alt: 'Atendimento - Sala de Reabilitação', tags: ['Atendimentos'] }
+    { src: atendimento10, alt: 'Atendimento - Sala de Reabilitação', tags: ['Atendimentos'] },
+    { src: atendimento11, alt: 'Atendimento - Espaço de Desenvolvimento Motor', tags: ['Atendimentos'] },
+    { src: atendimento12, alt: 'Atendimento - Ambiente de Estimulação Sensorial', tags: ['Atendimentos'] }
   ]), []);
 
   const filtered = useMemo(() => {
