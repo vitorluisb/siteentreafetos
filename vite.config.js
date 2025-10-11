@@ -54,54 +54,8 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // React core
-          if (id.includes('react') && !id.includes('react-router') && !id.includes('react-icons') && !id.includes('react-leaflet') && !id.includes('react-dropzone') && !id.includes('react-hook-form')) {
-            return 'react-core';
-          }
-          // Router
-          if (id.includes('react-router')) {
-            return 'router';
-          }
-          // UI Libraries
-          if (id.includes('@chakra-ui') || id.includes('@emotion')) {
-            return 'ui-chakra';
-          }
-          // Animation
-          if (id.includes('framer-motion')) {
-            return 'motion';
-          }
-          // Icons (split into smaller chunks)
-          if (id.includes('react-icons')) {
-            return 'icons-react';
-          }
-          if (id.includes('lucide-react')) {
-            return 'icons-lucide';
-          }
-          // Maps (split into smaller chunks)
-          if (id.includes('leaflet') || id.includes('react-leaflet')) {
-            return 'maps-leaflet';
-          }
-          if (id.includes('@googlemaps')) {
-            return 'maps-google';
-          }
-          // Supabase
-          if (id.includes('@supabase')) {
-            return 'supabase';
-          }
-          // Forms
-          if (id.includes('react-hook-form') || id.includes('react-dropzone')) {
-            return 'forms';
-          }
-          // Date utilities
-          if (id.includes('date-fns')) {
-            return 'date-utils';
-          }
-          // Other vendor libraries
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-        },
+        // Desabilitando manual chunking para evitar problemas de dependência
+        // manualChunks: undefined,
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
           const extType = info[info.length - 1];
