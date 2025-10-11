@@ -3,34 +3,26 @@ import HeroSection from '../components/HeroSection';
 import '../styles/Home.css';
 
 // Import do vídeo
-import videoClinica from '../assets/clinica/videoclinica.mp4';
+import videoClinica from '/videocompr.mp4';
 import entreafetosLogo from '../assets/logo/entreafetoslogo.png';
 
 const Home = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
+  const [videoMuted, setVideoMuted] = useState(true);
 
-  const openVideoModal = () => {
+  const handleVideoError = (e) => {
+    console.error('Video error:', e);
+  };
+
+  const handleVideoClick = () => {
+    // Abrir modal ampliado e ativar áudio
     setIsVideoModalOpen(true);
-    setVideoLoaded(false);
-    setVideoError(false);
+    setVideoMuted(false);
   };
 
   const closeVideoModal = () => {
     setIsVideoModalOpen(false);
-    setVideoLoaded(false);
-    setVideoError(false);
-  };
-
-  const handleVideoLoad = () => {
-    setVideoLoaded(true);
-    console.log('Video loaded successfully');
-  };
-
-  const handleVideoError = (e) => {
-    setVideoError(true);
-    console.error('Video error:', e);
+    setVideoMuted(true);
   };
 
   return (
@@ -73,24 +65,23 @@ const Home = () => {
               </div>
             </div>
             <div className="highlight-video">
-              <div className="video-thumbnail" onClick={openVideoModal}>
-                <div className="video-poster">
-                  <img 
-                    src={entreafetosLogo} 
-                    alt="Clínica Entre Afetos" 
-                    className="poster-image"
-                  />
-                  <div className="play-overlay">
-                    <div className="play-button">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+              <div className="video-container-small">
+                <video 
+                  className="auto-play-video"
+                  autoPlay
+                  muted={videoMuted}
+                  loop
+                  playsInline
+                  controls
+                  onClick={handleVideoClick}
+                  onError={handleVideoError}
+                >
+                  <source src={videoClinica} type="video/mp4" />
+                  <p>Seu navegador não suporta o elemento de vídeo.</p>
+                </video>
                 <div className="video-info">
                   <h4>Conheça Nossa Clínica</h4>
-                  <p>Clique para assistir ao vídeo</p>
+                  <p>Clique no vídeo para ampliar com áudio</p>
                 </div>
               </div>
             </div>
@@ -279,50 +270,28 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Modal do Vídeo */}
+
+      {/* Modal de Vídeo Ampliado */}
       {isVideoModalOpen && (
         <div className="video-modal-overlay" onClick={closeVideoModal}>
-          <div className="video-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeVideoModal}>
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-              </svg>
+          <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="video-modal-close" onClick={closeVideoModal}>
+              ×
             </button>
-            <div className="video-container">
-              {!videoLoaded && !videoError && (
-                <div className="video-loading">
-                  <div className="loading-spinner"></div>
-                  <p>Carregando vídeo...</p>
-                </div>
-              )}
-              {videoError && (
-                <div className="video-error">
-                  <p>Erro ao carregar o vídeo.</p>
-                  <a href={videoClinica} download className="btn btn-primary">
-                    Baixar vídeo
-                  </a>
-                </div>
-              )}
-              <video 
-                className="modal-video"
-                controls
-                autoPlay
-                muted
-                preload="auto"
-                playsInline
-                webkit-playsinline="true"
-                onLoadedData={handleVideoLoad}
-                onCanPlay={handleVideoLoad}
-                onError={handleVideoError}
-                style={{ display: videoLoaded ? 'block' : 'none' }}
-                poster=""
-                crossOrigin="anonymous"
-              >
-                <source src={videoClinica} type="video/mp4" />
-                <p>Seu navegador não suporta o elemento de vídeo. 
-                   <a href={videoClinica} download>Clique aqui para baixar o vídeo</a>
-                </p>
-              </video>
+            <video 
+              className="video-modal-player"
+              autoPlay
+              muted={false}
+              loop
+              controls
+              onError={handleVideoError}
+            >
+              <source src={videoClinica} type="video/mp4" />
+              <p>Seu navegador não suporta o elemento de vídeo.</p>
+            </video>
+            <div className="video-modal-info">
+              <h3>Conheça Nossa Clínica</h3>
+              <p>Nossa clínica é especializada no cuidado emocional de crianças e adolescentes, oferecendo um ambiente acolhedor e profissionais qualificados para acompanhar cada etapa do desenvolvimento.</p>
             </div>
           </div>
         </div>

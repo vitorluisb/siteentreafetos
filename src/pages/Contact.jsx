@@ -79,7 +79,7 @@ Enviado através do site da Clínica Entre Afetos.`;
       name: 'Clínica Entre Afetos - Guarabira Centro',
       address: 'Manoel Lordão, 219 - Centro, Guarabira - PB',
       phone: '(83) 98610-2718',
-      hours: 'Seg-Sex: 8h às 18h',
+      hours: 'Seg-Sex: 8:00 às 19:00 | Sáb: 8:00 às 12:00',
       position: { lat: -6.8566291732801155, lng: -35.486531737170196 }
     },
     {
@@ -87,7 +87,7 @@ Enviado através do site da Clínica Entre Afetos.`;
       name: 'Clínica Entre Afetos - Guarabira',
       address: 'José Bonifácio, 15 - Centro, Guarabira - PB',
       phone: '(83) 98610-2718',
-      hours: 'Seg-Sex: 8h às 18h',
+      hours: 'Seg-Sex: 8:00 às 19:00 | Sáb: 8:00 às 12:00',
       position: { lat: -6.851286547919602, lng: -35.48777473822952 }
     },
     {
@@ -95,7 +95,7 @@ Enviado através do site da Clínica Entre Afetos.`;
       name: 'Clínica Entre Afetos - Solânea',
       address: 'Rua Cirilo da Costa Maranhão, 284 - Centro, Solânea - PB',
       phone: '(83) 98610-2718',
-      hours: 'Seg-Sex: 8h às 18h',
+      hours: 'Seg-Sex: 8:00 às 19:00 | Sáb: 8:00 às 12:00',
       position: { lat: -6.759461231989829, lng: -35.66164279430529 }
     }
   ];
@@ -173,8 +173,8 @@ Enviado através do site da Clínica Entre Afetos.`;
                 <FaClock />
               </div>
               <h3>Horário de Funcionamento</h3>
-              <p>Segunda a Sexta</p>
-              <p>8h às 18h</p>
+              <p>Segunda a Sexta: 8:00 às 19:00</p>
+              <p>Sábado: 8:00 às 12:00</p>
             </motion.div>
             <motion.div className="contact-card" variants={itemVariants}>
               <div className="contact-icon whatsapp">

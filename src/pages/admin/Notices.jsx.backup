@@ -1,0 +1,906 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  Heading,
+  Text,
+  VStack,
+  HStack,
+  Badge,
+  IconButton,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  Select,
+  useToast,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Spinner,
+  Center,
+  Container,
+  SimpleGrid,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Tooltip,
+  useColorModeValue,
+  Fade,
+  ScaleFade,
+  Collapse,
+  Wrap,
+  WrapItem
+} from '@chakra-ui/react';
+import { AddIcon, EditIcon, DeleteIcon, SearchIcon, BellIcon, TimeIcon, ViewIcon } from '@chakra-ui/icons';
+import { FaFilter, FaSort, FaEye, FaHeart, FaComment } from 'react-icons/fa';
+import { supabase } from '../../config/supabase';
+import { useAuth } from '../../contexts/AuthContext';
+
+const Notices = () => {
+  const [notices, setNotices] = useState([]);
+  const [filteredNotices, setFilteredNotices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedNotice, setSelectedNotice] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedSector, setSelectedSector] = useState('all');
+  const [sortBy, setSortBy] = useState('newest');
+  const [viewMode, setViewMode] = useState('grid'); // grid ou list
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    sector: ''
+  });
+  const [deleteNoticeId, setDeleteNoticeId] = useState(null);
+  
+  const { user, isAdmin, userProfile } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { 
+    isOpen: isDeleteOpen, 
+    onOpen: onDeleteOpen, 
+    onClose: onDeleteClose 
+  } = useDisclosure();
+  const toast = useToast();
+  const cancelRef = React.useRef();
+
+  // Cores do tema
+  const bgGradient = useColorModeValue(
+    'linear(to-br, pink.50, purple.50, blue.50)',
+    'linear(to-br, gray.900, gray.800, gray.700)'
+  );
+  const cardBg = useColorModeValue('white', 'gray.800');
+  const textColor = useColorModeValue('gray.700', 'gray.200');
+
+  const sectors = [
+    'Geral',
+    'Psicologia',
+    'Administração',
+    'Recepção',
+    'Limpeza',
+    'Manutenção'
+  ];
+
+  useEffect(() => {
+    // Não fazer consultas ao banco para usuários demo
+    if (user?.id === '00000000-0000-4000-8000-000000000001' || user?.id === '00000000-0000-4000-8000-000000000002') {
+      // Dados mockados para demonstração
+      const mockNotices = [
+        {
+          id: 1,
+          title: 'Bem-vindos ao Sistema!',
+          content: 'Este é um aviso de demonstração. O sistema está funcionando corretamente e todas as funcionalidades estão disponíveis para uso.',
+          sector: 'Geral',
+          author_id: user.id,
+          created_at: new Date().toISOString(),
+          users: { name: user?.user_metadata?.name || 'Demo User' },
+          priority: 'high',
+          views: 12,
+          likes: 5
+        },
+        {
+          id: 2,
+          title: 'Funcionalidades Disponíveis',
+          content: 'Explore todas as funcionalidades do sistema: Chat interno para comunicação em tempo real, Agenda compartilhada para eventos, Documentos para arquivos importantes e Enquetes para feedback.',
+          sector: 'Informativo',
+          author_id: user.id,
+          created_at: new Date(Date.now() - 86400000).toISOString(),
+          users: { name: user?.user_metadata?.name || 'Demo User' },
+          priority: 'medium',
+          views: 8,
+          likes: 3
+        },
+        {
+          id: 3,
+          title: 'Atualização do Sistema',
+          content: 'Nova versão do painel administrativo com melhorias de interface e experiência do usuário. Aproveite as novas funcionalidades!',
+          sector: 'Administração',
+          author_id: user.id,
+          created_at: new Date(Date.now() - 172800000).toISOString(),
+          users: { name: user?.user_metadata?.name || 'Demo User' },
+          priority: 'low',
+          views: 15,
+          likes: 7
+        }
+      ];
+      setNotices(mockNotices);
+      setFilteredNotices(mockNotices);
+      setLoading(false);
+      return;
+    }
+    
+    fetchNotices();
+  }, [user]);
+
+  // Filtrar e ordenar avisos
+  useEffect(() => {
+    let filtered = notices.filter(notice => {
+      const matchesSearch = notice.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           notice.content.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSector = selectedSector === 'all' || notice.sector === selectedSector;
+      return matchesSearch && matchesSector;
+    });
+
+    // Ordenar
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'newest':
+          return new Date(b.created_at) - new Date(a.created_at);
+        case 'oldest':
+          return new Date(a.created_at) - new Date(b.created_at);
+        case 'title':
+          return a.title.localeCompare(b.title);
+        case 'views':
+          return (b.views || 0) - (a.views || 0);
+        default:
+          return 0;
+      }
+    });
+
+    setFilteredNotices(filtered);
+  }, [notices, searchTerm, selectedSector, sortBy]);
+
+  const fetchNotices = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('notices')
+        .select(`
+          *,
+          users (
+            name
+          )
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setNotices(data || []);
+      setFilteredNotices(data || []);
+    } catch (error) {
+      toast({
+        title: 'Erro ao carregar avisos',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!formData.title.trim() || !formData.content.trim()) {
+      toast({
+        title: 'Campos obrigatórios',
+        description: 'Por favor, preencha o título e o conteúdo.',
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    try {
+      if (selectedNotice) {
+        // Editar aviso existente
+        const { error } = await supabase
+          .from('notices')
+          .update({
+            title: formData.title,
+            content: formData.content,
+            sector: formData.sector
+          })
+          .eq('id', selectedNotice.id);
+
+        if (error) throw error;
+
+        toast({
+          title: 'Aviso atualizado com sucesso!',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        // Criar novo aviso
+        const { error } = await supabase
+          .from('notices')
+          .insert([
+            {
+              title: formData.title,
+              content: formData.content,
+              sector: formData.sector,
+              author_id: user.id
+            }
+          ]);
+
+        if (error) throw error;
+
+        toast({
+          title: 'Aviso criado com sucesso!',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+
+      fetchNotices();
+      handleCloseModal();
+    } catch (error) {
+      toast({
+        title: 'Erro ao salvar aviso',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleEdit = (notice) => {
+    setSelectedNotice(notice);
+    setFormData({
+      title: notice.title,
+      content: notice.content,
+      sector: notice.sector
+    });
+    onOpen();
+  };
+
+  const handleDelete = async () => {
+    try {
+      const { error } = await supabase
+        .from('notices')
+        .delete()
+        .eq('id', deleteNoticeId);
+
+      if (error) throw error;
+
+      toast({
+        title: 'Aviso excluído com sucesso!',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+
+      fetchNotices();
+    } catch (error) {
+      toast({
+        title: 'Erro ao excluir aviso',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      onDeleteClose();
+      setDeleteNoticeId(null);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setSelectedNotice(null);
+    setFormData({
+      title: '',
+      content: '',
+      sector: ''
+    });
+    onClose();
+  };
+
+  const openDeleteDialog = (noticeId) => {
+    setDeleteNoticeId(noticeId);
+    onDeleteOpen();
+  };
+
+  const getSectorColor = (sector) => {
+    const colors = {
+      'Geral': 'pink',
+      'Psicologia': 'purple',
+      'Administração': 'blue',
+      'Recepção': 'orange',
+      'Limpeza': 'teal',
+      'Manutenção': 'red',
+      'Informativo': 'cyan'
+    };
+    return colors[sector] || 'gray';
+  };
+
+  const getPriorityColor = (priority) => {
+    const colors = {
+      'high': 'red',
+      'medium': 'orange',
+      'low': 'green'
+    };
+    return colors[priority] || 'gray';
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) return 'Hoje';
+    if (diffDays === 2) return 'Ontem';
+    if (diffDays <= 7) return (diffDays - 1) + ' dias atrás';
+    return date.toLocaleDateString('pt-BR');
+  };
+
+  if (loading) {
+    return (
+      <Box minH="100vh" bgGradient={bgGradient}>
+        <Container maxW="7xl" py={8}>
+          <Center h="400px">
+            <VStack spacing={4}>
+              <Spinner size="xl" color="pink.500" thickness="4px" />
+              <Text color={textColor} fontSize="lg">Carregando avisos...</Text>
+            </VStack>
+          </Center>
+        </Container>
+      </Box>
+    );
+  }
+
+  return (
+    <Box minH="100vh" bgGradient={bgGradient}>
+      <Container maxW="7xl" py={8}>
+        {/* Header com gradiente e ações */}
+        <Card 
+          mb={8} 
+          bg="linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,180,217,0.1) 100%)"
+          backdropFilter="blur(10px)"
+          border="1px solid"
+          borderColor="pink.100"
+          shadow="xl"
+        >
+          <CardBody p={8}>
+            <Flex direction={{ base: 'column', lg: 'row' }} justify="space-between" align={{ base: 'start', lg: 'center' }} gap={6}>
+              <VStack align="start" spacing={2}>
+                <HStack spacing={3}>
+                  <Box 
+                    p={3} 
+                    bg="linear-gradient(135deg, #F8B4D9, #E8B4B8)" 
+                    borderRadius="full"
+                    shadow="lg"
+                  >
+                    <BellIcon boxSize={6} color="white" />
+                  </Box>
+                  <VStack align="start" spacing={0}>
+                    <Heading size="xl" color="gray.700" fontWeight="bold">
+                      Mural de Avisos
+                    </Heading>
+                    <Text color="gray.500" fontSize="md">
+                      Comunicações importantes da equipe
+                    </Text>
+                  </VStack>
+                </HStack>
+              </VStack>
+
+              {userProfile?.role !== 'user' && (
+                <Button
+                  leftIcon={<AddIcon />}
+                  bg="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  color="white"
+                  size="lg"
+                  borderRadius="full"
+                  px={8}
+                  py={6}
+                  fontSize="md"
+                  fontWeight="semibold"
+                  shadow="lg"
+                  _hover={{ 
+                    transform: 'translateY(-2px)',
+                    shadow: 'xl',
+                    bg: "linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)"
+                  }}
+                  _active={{ transform: 'translateY(0)' }}
+                  transition="all 0.3s ease"
+                  onClick={onOpen}
+                >
+                  Novo Aviso
+                </Button>
+              )}
+            </Flex>
+          </CardBody>
+        </Card>
+
+        {/* Filtros e busca */}
+        <Card mb={6} bg={cardBg} shadow="lg" border="1px solid" borderColor="pink.100">
+          <CardBody p={6}>
+            <VStack spacing={4}>
+              {/* Busca */}
+              <InputGroup size="lg">
+                <InputLeftElement>
+                  <SearchIcon color="pink.400" />
+                </InputLeftElement>
+                <Input
+                  placeholder="Buscar avisos por título ou conteúdo..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  bg="gray.50"
+                  border="2px solid"
+                  borderColor="pink.100"
+                  borderRadius="full"
+                  _focus={{
+                    borderColor: "blue.400",
+                    bg: "white",
+                    shadow: "0 0 0 3px rgba(66, 153, 225, 0.1)"
+                  }}
+                  _hover={{ borderColor: "pink.200" }}
+                />
+                {searchTerm && (
+                  <InputRightElement>
+                    <IconButton
+                      icon={<DeleteIcon />}
+                      size="sm"
+                      variant="ghost"
+                      colorScheme="gray"
+                      onClick={() => setSearchTerm('')}
+                      aria-label="Limpar busca"
+                    />
+                  </InputRightElement>
+                )}
+              </InputGroup>
+
+              {/* Filtros */}
+              <Flex direction={{ base: 'column', md: 'row' }} gap={4} w="full" align="center">
+                <HStack spacing={4} flex={1}>
+                  <Text fontSize="sm" fontWeight="semibold" color={textColor} minW="fit-content">
+                    Filtros:
+                  </Text>
+                  
+                  <Select
+                    value={selectedSector}
+                    onChange={(e) => setSelectedSector(e.target.value)}
+                    size="md"
+                    bg="white"
+                    borderColor="pink.200"
+                    borderRadius="lg"
+                    _focus={{ borderColor: "blue.400" }}
+                    maxW="200px"
+                  >
+                    <option value="all">Todos os setores</option>
+                    {sectors.map(sector => (
+                      <option key={sector} value={sector}>{sector}</option>
+                    ))}
+                  </Select>
+
+                  <Select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    size="md"
+                    bg="white"
+                    borderColor="pink.200"
+                    borderRadius="lg"
+                    _focus={{ borderColor: "blue.400" }}
+                    maxW="200px"
+                  >
+                    <option value="newest">Mais recentes</option>
+                    <option value="oldest">Mais antigos</option>
+                    <option value="title">Por título</option>
+                    <option value="views">Mais visualizados</option>
+                  </Select>
+                </HStack>
+
+                <HStack spacing={2}>
+                  <Text fontSize="sm" color={textColor}>Visualização:</Text>
+                  <Button
+                    size="sm"
+                    variant={viewMode === 'grid' ? 'solid' : 'outline'}
+                    colorScheme={viewMode === 'grid' ? 'pink' : 'gray'}
+                    onClick={() => setViewMode('grid')}
+                  >
+                    Grade
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={viewMode === 'list' ? 'solid' : 'outline'}
+                    colorScheme={viewMode === 'list' ? 'pink' : 'gray'}
+                    onClick={() => setViewMode('list')}
+                  >
+                    Lista
+                  </Button>
+                </HStack>
+              </Flex>
+            </VStack>
+          </CardBody>
+        </Card>
+
+        {/* Estatísticas rápidas */}
+        <SimpleGrid columns={{ base: 2, md: 4 }} spacing={4} mb={6}>
+          <Card bg="linear-gradient(135deg, #F8B4D9, #E8B4B8)" color="white" shadow="lg">
+            <CardBody p={4} textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">{filteredNotices.length}</Text>
+              <Text fontSize="sm" opacity={0.9}>Avisos Encontrados</Text>
+            </CardBody>
+          </Card>
+          <Card bg="linear-gradient(135deg, #667eea, #764ba2)" color="white" shadow="lg">
+            <CardBody p={4} textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">{notices.length}</Text>
+              <Text fontSize="sm" opacity={0.9}>Total de Avisos</Text>
+            </CardBody>
+          </Card>
+          <Card bg="linear-gradient(135deg, #f093fb, #f5576c)" color="white" shadow="lg">
+            <CardBody p={4} textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">{sectors.length}</Text>
+              <Text fontSize="sm" opacity={0.9}>Setores Ativos</Text>
+            </CardBody>
+          </Card>
+          <Card bg="linear-gradient(135deg, #4facfe, #00f2fe)" color="white" shadow="lg">
+            <CardBody p={4} textAlign="center">
+              <Text fontSize="2xl" fontWeight="bold">
+                {notices.reduce((sum, notice) => sum + (notice.views || 0), 0)}
+              </Text>
+              <Text fontSize="sm" opacity={0.9}>Total de Visualizações</Text>
+            </CardBody>
+          </Card>
+        </SimpleGrid>
+
+        {/* Lista de avisos */}
+        {filteredNotices.length === 0 ? (
+          <Card bg={cardBg} shadow="lg">
+            <CardBody py={16}>
+              <VStack spacing={4}>
+                <Box 
+                  p={6} 
+                  bg="linear-gradient(135deg, #F8B4D9, #E8B4B8)" 
+                  borderRadius="full"
+                  shadow="lg"
+                >
+                  <BellIcon boxSize={8} color="white" />
+                </Box>
+                <VStack spacing={2}>
+                  <Text fontSize="xl" fontWeight="semibold" color={textColor}>
+                    {(searchTerm || selectedSector !== 'all') ? 'Nenhum aviso encontrado' : 'Nenhum aviso ainda'}
+                  </Text>
+                  <Text color="gray.500" textAlign="center" maxW="md">
+                    {((searchTerm || selectedSector !== 'all') 
+                      ? 'Tente ajustar os filtros de busca para encontrar o que procura.'
+                      : 'Seja o primeiro a criar um aviso para a equipe!')
+                    }
+                  </Text>
+                </VStack>
+                {userProfile?.role !== 'user' && !searchTerm && selectedSector === 'all' && (
+                  <Button
+                    leftIcon={<AddIcon />}
+                    colorScheme="pink"
+                    size="lg"
+                    borderRadius="full"
+                    onClick={onOpen}
+                    mt={4}
+                  >
+                    Criar Primeiro Aviso
+                  </Button>
+                )}
+              </VStack>
+            </CardBody>
+          </Card>
+        ) : (
+          <SimpleGrid 
+            columns={{ base: 1, md: viewMode === 'grid' ? 2 : 1, lg: viewMode === 'grid' ? 3 : 1 }} 
+            spacing={6}
+          >
+            {filteredNotices.map((notice, index) => (
+              <ScaleFade key={notice.id} initialScale={0.9} in={true}>
+                <Card
+                  bg={cardBg}
+                  shadow="lg"
+                  border="1px solid"
+                  borderColor="pink.100"
+                  borderRadius="2xl"
+                  overflow="hidden"
+                  transition="all 0.3s ease"
+                  _hover={{
+                    transform: 'translateY(-4px)',
+                    shadow: 'xl',
+                    borderColor: 'blue.200'
+                  }}
+                  position="relative"
+                >
+                  {/* Indicador de prioridade */}
+                  {notice.priority && (
+                    <Box
+                      position="absolute"
+                      top={4}
+                      right={4}
+                      w={3}
+                      h={3}
+                      borderRadius="full"
+                      bg={getPriorityColor(notice.priority) + '.400'}
+                      zIndex={2}
+                    />
+                  )}
+
+                  <CardHeader pb={2}>
+                    <VStack align="start" spacing={3}>
+                      <HStack justify="space-between" w="full">
+                        <Badge 
+                          colorScheme={getSectorColor(notice.sector)}
+                          variant="subtle"
+                          borderRadius="full"
+                          px={3}
+                          py={1}
+                          fontSize="xs"
+                          fontWeight="bold"
+                        >
+                          {notice.sector}
+                        </Badge>
+                        <Text fontSize="xs" color="gray.500" fontWeight="medium">
+                          {formatDate(notice.created_at)}
+                        </Text>
+                      </HStack>
+                      
+                      <Heading 
+                        size="md" 
+                        color={textColor}
+                        fontWeight="bold"
+                        lineHeight="1.3"
+                        noOfLines={2}
+                      >
+                        {notice.title}
+                      </Heading>
+                    </VStack>
+                  </CardHeader>
+
+                  <CardBody pt={0}>
+                    <VStack align="start" spacing={4}>
+                      <Text 
+                        color="gray.600" 
+                        fontSize="sm"
+                        lineHeight="1.6"
+                        noOfLines={viewMode === 'grid' ? 3 : 2}
+                      >
+                        {notice.content}
+                      </Text>
+
+                      {/* Estatísticas e ações */}
+                      <Flex justify="space-between" align="center" w="full" pt={2}>
+                        <HStack spacing={4}>
+                          <HStack spacing={1}>
+                            <ViewIcon boxSize={3} color="gray.400" />
+                            <Text fontSize="xs" color="gray.500">
+                              {notice.views || 0}
+                            </Text>
+                          </HStack>
+                          <HStack spacing={1}>
+                            <FaHeart size={12} color="#CBD5E0" />
+                            <Text fontSize="xs" color="gray.500">
+                              {notice.likes || 0}
+                            </Text>
+                          </HStack>
+                        </HStack>
+
+                        {((isAdmin() || notice.author_id === user.id) && userProfile?.role !== 'user') && (
+                          <HStack spacing={1}>
+                            <Tooltip label="Editar aviso">
+                              <IconButton
+                                icon={<EditIcon />}
+                                size="sm"
+                                variant="ghost"
+                                colorScheme="blue"
+                                onClick={() => handleEdit(notice)}
+                                aria-label="Editar aviso"
+                                borderRadius="full"
+                              />
+                            </Tooltip>
+                            <Tooltip label="Excluir aviso">
+                              <IconButton
+                                icon={<DeleteIcon />}
+                                size="sm"
+                                variant="ghost"
+                                colorScheme="red"
+                                onClick={() => openDeleteDialog(notice.id)}
+                                aria-label="Excluir aviso"
+                                borderRadius="full"
+                              />
+                            </Tooltip>
+                          </HStack>
+                        )}
+                      </Flex>
+
+                      {/* Autor */}
+                      <HStack spacing={2} pt={2} borderTop="1px solid" borderColor="gray.100">
+                        <Text fontSize="xs" color="gray.500">
+                          Por: <Text as="span" fontWeight="semibold">{notice.users?.name || 'Usuário desconhecido'}</Text>
+                        </Text>
+                      </HStack>
+                    </VStack>
+                  </CardBody>
+                </Card>
+              </ScaleFade>
+            ))}
+          </SimpleGrid>
+        )}
+
+        {/* Modal para criar/editar aviso */}
+        <Modal isOpen={isOpen} onClose={handleCloseModal} size="xl">
+          <ModalOverlay backdropFilter="blur(10px)" />
+          <ModalContent borderRadius="2xl" mx={4}>
+            <ModalHeader 
+              bg="linear-gradient(135deg, #F8B4D9, #E8B4B8)"
+              color="white"
+              borderTopRadius="2xl"
+              py={6}
+            >
+              <HStack spacing={3}>
+                <BellIcon boxSize={5} />
+                <Text fontWeight="bold">
+                  {selectedNotice ? 'Editar Aviso' : 'Novo Aviso'}
+                </Text>
+              </HStack>
+            </ModalHeader>
+            <ModalCloseButton color="white" />
+            
+            <form onSubmit={handleSubmit}>
+              <ModalBody py={6} px={8}>
+                <VStack spacing={6}>
+                  <FormControl isRequired>
+                    <FormLabel fontWeight="semibold" color={textColor}>Título</FormLabel>
+                    <Input
+                      value={formData.title}
+                      onChange={(e) => setFormData({...formData, title: e.target.value})}
+                      placeholder="Digite o título do aviso..."
+                      size="lg"
+                      borderRadius="lg"
+                      borderColor="pink.200"
+                      _focus={{ borderColor: "blue.400", shadow: "0 0 0 3px rgba(66, 153, 225, 0.1)" }}
+                    />
+                  </FormControl>
+
+                  <FormControl isRequired>
+                    <FormLabel fontWeight="semibold" color={textColor}>Setor</FormLabel>
+                    <Select
+                      value={formData.sector}
+                      onChange={(e) => setFormData({...formData, sector: e.target.value})}
+                      placeholder="Selecione o setor..."
+                      size="lg"
+                      borderRadius="lg"
+                      borderColor="pink.200"
+                      _focus={{ borderColor: "blue.400", shadow: "0 0 0 3px rgba(66, 153, 225, 0.1)" }}
+                    >
+                      {sectors.map(sector => (
+                        <option key={sector} value={sector}>{sector}</option>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl isRequired>
+                    <FormLabel fontWeight="semibold" color={textColor}>Conteúdo</FormLabel>
+                    <Textarea
+                      value={formData.content}
+                      onChange={(e) => setFormData({...formData, content: e.target.value})}
+                      placeholder="Digite o conteúdo do aviso..."
+                      rows={6}
+                      resize="vertical"
+                      borderRadius="lg"
+                      borderColor="pink.200"
+                      _focus={{ borderColor: "blue.400", shadow: "0 0 0 3px rgba(66, 153, 225, 0.1)" }}
+                    />
+                  </FormControl>
+                </VStack>
+              </ModalBody>
+
+              <ModalFooter px={8} py={6}>
+                <HStack spacing={3}>
+                  <Button 
+                    variant="ghost" 
+                    onClick={handleCloseModal}
+                    borderRadius="full"
+                    px={6}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    type="submit"
+                    bg="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                    color="white"
+                    borderRadius="full"
+                    px={8}
+                    _hover={{ 
+                      bg: "linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)",
+                      transform: 'translateY(-1px)'
+                    }}
+                    _active={{ transform: 'translateY(0)' }}
+                  >
+                    {selectedNotice ? 'Atualizar' : 'Criar'} Aviso
+                  </Button>
+                </HStack>
+              </ModalFooter>
+            </form>
+          </ModalContent>
+        </Modal>
+
+        {/* Dialog de confirmação para exclusão */}
+        <AlertDialog
+          isOpen={isDeleteOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={onDeleteClose}
+        >
+          <AlertDialogOverlay backdropFilter="blur(10px)">
+            <AlertDialogContent borderRadius="2xl" mx={4}>
+              <AlertDialogHeader 
+                fontSize="lg" 
+                fontWeight="bold"
+                bg="red.500"
+                color="white"
+                borderTopRadius="2xl"
+              >
+                Confirmar Exclusão
+              </AlertDialogHeader>
+
+              <AlertDialogBody py={6}>
+                <Text>
+                  Tem certeza que deseja excluir este aviso? Esta ação não pode ser desfeita.
+                </Text>
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <HStack spacing={3}>
+                  <Button 
+                    ref={cancelRef} 
+                    onClick={onDeleteClose}
+                    variant="ghost"
+                    borderRadius="full"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button 
+                    colorScheme="red" 
+                    onClick={handleDelete}
+                    borderRadius="full"
+                    px={6}
+                  >
+                    Excluir
+                  </Button>
+                </HStack>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </Box>
+    );
+  }
+
+export default Notices;

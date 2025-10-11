@@ -60,13 +60,19 @@
 }
 .article-image-featured {
   margin-bottom: var(--spacing-3xl);
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .article-image-featured img {
-  max-width: 100%;
+  width: 100%;
+  max-width: 720px;
   height: auto;
+  object-fit: contain;
+  display: block;
   border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-lg);
+  margin: 0 auto;
 }
 .article-body {
   display: flex;

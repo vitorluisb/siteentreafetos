@@ -6,7 +6,8 @@ import {
   FaMapMarkerAlt, 
   FaPhone, 
   FaEnvelope,
-  FaHeart
+  FaHeart,
+  FaClock
 } from 'react-icons/fa';
 import '../styles/Footer.css';
 
@@ -120,6 +121,13 @@ const Footer = () => {
                 <FaEnvelope />
                 <div>
                   <p>contato@entreafetos.com</p>
+                </div>
+              </div>
+              <div className="contact-item">
+                <FaClock />
+                <div>
+                  <p>Segunda a Sexta: 8:00 às 19:00</p>
+                  <p>Sábado: 8:00 às 12:00</p>
                 </div>
               </div>
             </div>

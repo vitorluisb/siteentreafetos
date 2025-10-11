@@ -38,6 +38,16 @@ const Publications = () => {
     }
     ,
     {
+      slug: 'sensorial-e-inverno-como-equilibrar',
+      title: 'Sensorial e inverno: como equilibrar?',
+      excerpt: 'Nem todo cobertor aquece — para algumas crianças, certas texturas e temperaturas incomodam',
+      cover: '/publicacoes/invernosensorial.png',
+      tag: 'Dicas para Pais',
+      date: '2025-10-09',
+      author: 'Equipe Entre Afetos'
+    }
+  ,
+    {
       slug: 'dificuldades-na-escola-ainda-da-tempo-de-superar',
       title: 'Dificuldades na escola? Ainda dá tempo de superar isso!',
       excerpt: 'Como identificar os sinais, apoiar em casa e buscar o suporte certo para o aprendizado.',
@@ -71,6 +81,25 @@ const Publications = () => {
       cover: '/publicacoes/escrita.png',
       tag: 'Dificuldades de Aprendizagem',
       date: '2025-10-07',
+      author: 'Equipe Entre Afetos'
+    }
+    ,
+    {
+      slug: 'o-que-e-tdah-afinal',
+      title: 'O que é TDAH, afinal?',
+      excerpt: 'Principais sinais em crianças e adolescentes e como apoiar com empatia.',
+      cover: '/publicacoes/tdah.png',
+      tag: 'Saúde Emocional',
+      date: '2025-10-09',
+      author: 'Equipe Entre Afetos'
+    },
+    {
+      slug: 'o-que-e-apraxia-de-fala',
+      title: 'O que é Apraxia de Fala?',
+      excerpt: 'Entenda essa condição que afeta os movimentos da boca e como a fonoaudiologia pode ajudar.',
+      cover: '/publicacoes/apraxia.png',
+      tag: 'Dicas para Pais',
+      date: '2025-10-10',
       author: 'Equipe Entre Afetos'
     }
   ]), []);

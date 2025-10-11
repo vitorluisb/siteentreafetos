@@ -15,6 +15,9 @@ export default defineConfig({
     sourcemap: false,
     minify: 'terser',
     chunkSizeWarningLimit: 1000,
+    target: 'es2015',
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -23,6 +26,8 @@ export default defineConfig({
           motion: ['framer-motion'],
           icons: ['react-icons', 'lucide-react'],
           maps: ['leaflet', 'react-leaflet', '@googlemaps/js-api-loader', '@googlemaps/react-wrapper'],
+          ui: ['@chakra-ui/react', '@emotion/react', '@emotion/styled'],
+          supabase: ['@supabase/supabase-js'],
         },
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
@@ -43,6 +48,14 @@ export default defineConfig({
       compress: {
         drop_console: true,
         drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
+        passes: 2,
+      },
+      mangle: {
+        safari10: true,
+      },
+      format: {
+        comments: false,
       },
     },
   },
